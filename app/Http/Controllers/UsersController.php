@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Player;
+use Auth;
 
 class UsersController extends Controller
 {
@@ -14,31 +17,25 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getAllPlayers()
     {
-        //
+        $players = Player::all();
+        return view('',compact('players'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function rank($id)
     {
-        //
+        $playerRank = Player::where('id','=',$id)->get(array('name','score'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function rankAll()
     {
-        //
+        $playerRank = Player::all()->get(array('id','name','score'))->orderBy('score');
+        return view('',compact('playerRank'));
     }
+
 
     /**
      * Display the specified resource.
@@ -48,30 +45,45 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        $player = Player::findOrFail($id);
+        $data = array('details' => $player->details ,
+                           'id' => $id);
+        return view('',$data);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function postScore(Request $request,$id)
     {
-        //
+        $player_id = $id;
+        $user_id = Auth::id();
+        if($this->isMarking($id))
+            {
+                session()->flash('danger','你已经对该选手评分了')；
+                return redirect()->route('');
+            }else
+            {
+                $score = Score::create([
+                    'player_id' = $player_id,
+                    'user_id' = $user_id,
+                    'score' = $request->score
+                ]);
+                session()->falsh('success','评分成功');
+                return redirect()->route('');
+            }
+    }
+
+    public function isMarking($id)
+    {
+        $player_id = $id;
+        $user_id = Auth::id();
+        if($check=Score::where('player_id' => $player_id)
+                            ->where('user_id' => $user_id))
+        {return 'true'; }else{return 'false';}
     }
 
     /**

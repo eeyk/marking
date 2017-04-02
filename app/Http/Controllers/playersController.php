@@ -16,7 +16,8 @@ class playersController extends Controller
      */
     public function index()
     {
-        //
+        $players = Player::all();
+        return view('',compact('players'));
     }
 
     /**
@@ -46,9 +47,12 @@ class playersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function getDetails($id)
     {
-        //
+        $player = Player::findOrFail($id);
+        $details = $player->details;
+        return view('',$details);
+
     }
 
     /**

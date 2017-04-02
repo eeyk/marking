@@ -6,17 +6,20 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Auth;
+use App\Models\User;
 
 class SessionsController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    *限制只能未登录用户访问
+    */
+    public function __construct()
     {
-        //
+        $this->middleware('guest', [
+            'only' => ['create']
+          ]);
     }
 
     /**
@@ -26,7 +29,7 @@ class SessionsController extends Controller
      */
     public function create()
     {
-        //
+        return view('sessions.create');
     }
 
     /**
@@ -37,42 +40,26 @@ class SessionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+          'account' => 'required',
+          'password' => 'required'
+        ]);
+
+        $credentials=[
+          'account' => $request->account,
+          'password' => $request->password,
+        ];
+
+        if (Auth::attempt($credentials,$request->has('remember')))
+        {
+          session()->flash('success','欢迎登录！');
+          return redirect()->intended(route(''));
+        }else {
+          session()->flash('danger','很抱歉，您的帐号和密码不匹配')；
+          return redirect()->back();
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -82,6 +69,8 @@ class SessionsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Auth::logout();
+        session()->flash('success','您已经成功退出');
+        return redirect('login');
     }
 }
