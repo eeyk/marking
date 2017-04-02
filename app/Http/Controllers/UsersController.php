@@ -20,7 +20,7 @@ class UsersController extends Controller
     public function getAllPlayers()
     {
         $players = Player::all();
-        return view('',compact('players'));
+        return view('test',compact('players'));
     }
 
 
@@ -33,7 +33,7 @@ class UsersController extends Controller
     public function rankAll()
     {
         $playerRank = Player::all()->get(array('id','name','score'))->orderBy('score');
-        return view('',compact('playerRank'));
+        return view('test',compact('playerRank'));
     }
 
 
@@ -48,7 +48,7 @@ class UsersController extends Controller
         $player = Player::findOrFail($id);
         $data = array('details' => $player->details ,
                            'id' => $id);
-        return view('',$data);
+        return view('test',$data);
     }
 
     /**
@@ -64,7 +64,7 @@ class UsersController extends Controller
         if($this->isMarking($id))
             {
                 session()->flash('danger','你已经对该选手评分了')；
-                return redirect()->route('');
+                return redirect()->route('index');
             }else
             {
                 $score = Score::create([
@@ -73,7 +73,7 @@ class UsersController extends Controller
                     'score' = $request->score
                 ]);
                 session()->falsh('success','评分成功');
-                return redirect()->route('');
+                return redirect()->route('index');
             }
     }
 

@@ -13,23 +13,13 @@ class SessionsController extends Controller
 {
 
     /**
-    *限制只能未登录用户访问
-    */
-    public function __construct()
-    {
-        $this->middleware('guest', [
-            'only' => ['create']
-          ]);
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('sessions.create');
+        return view('test');
     }
 
     /**
@@ -53,7 +43,7 @@ class SessionsController extends Controller
         if (Auth::attempt($credentials,$request->has('remember')))
         {
           session()->flash('success','欢迎登录！');
-          return redirect()->intended(route(''));
+          return redirect()->intended(route('index'));
         }else {
           session()->flash('danger','很抱歉，您的帐号和密码不匹配')；
           return redirect()->back();

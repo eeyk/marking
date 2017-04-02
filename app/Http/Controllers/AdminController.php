@@ -20,7 +20,7 @@ class AdminController extends Controller
      */
     public function getCreateActivity()
     {
-        return view('');
+        return view('test');
     }
 
     /**
@@ -48,7 +48,7 @@ class AdminController extends Controller
      */
     public function getCreateUser()
     {
-        return view('');
+        return view('test');
     }
 
     /**
@@ -57,9 +57,10 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function postCreateUser(Request $request,$name)
+    public function postCreateUser(Request $request,$id)
     {
-        $activity_id=Activity::where('name','=',$name)->get('id');
+    #   $activity_id=Activity::where('name','=',$name)->get('id');
+        $activity_id=$id;
         $this->validate($request,[
             'name'=>'required|max:50',
             'account'=>'required|account|unique:users|max:255',
@@ -72,6 +73,11 @@ class AdminController extends Controller
             'password'=>bcrypt($request->password),
             'weight'=>($request->weight)
         ]);
+    }
+
+    public function getCreatePlayer()
+    {
+        return view('test');
     }
 
     /**
@@ -90,19 +96,19 @@ class AdminController extends Controller
     public function getUpdateActivity($id)
     {
         $activity = Activity::findOrFail($id);
-        return view('',compact('activity'));
+        return view('test',compact('activity'));
     }
 
     public function getUpdateUser($id)
     {
         $user = User::findOrFail($id);
-        return view('',compact('user'));
+        return view('test',compact('user'));
     }
 
     public function getUpdatePlayer($id)
     {
         $player = Player::findOrFail($id);
-        return view('',compact('player'));
+        return view('test',compact('player'));
     }
 
     /**
