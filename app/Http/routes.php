@@ -15,12 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('login','SessionsController@create')->name('login')->middleware('auth');
-Route::group(['middleware'=>'auth'],function(){
+Route::group(['middleware'=>'guest'],function(){
 
-    Route::post('login','SessionsController@store')->name('login');
-    Route::delete('logout','SessionsController@destroy')->name('logout');
+  Route::get('login','SessionsController@create')->name('login');
+  Route::post('login','SessionsController@store')->name('login');
+
 });
+Route::delete('logout','SessionsController@destroy')->name('logout')->middleware('auth');
 #post('login','SessionsController@store')->name('login');
 #delete('logout','SessionsController@destroy')->name('logout');
 Route::group(['middleware'=>'auth'],function(){
@@ -43,10 +44,10 @@ Route::group(['middleware'=>'admin'],function(){
   Route::get('create/user','AdminController@getCreateUser')->name('createUser');
   Route::get('create/player','AdminController@getCreatePlayer')->name('createPlayer');
   Route::post('create/activity','AdminController@postCreateActivity')->name('createActivity');
-  Route::post('create/user/{id}','AdminController@postCreateUser')->name('createUser');
+  Route::post('create/user/','AdminController@postCreateUser')->name('createUser');
   #Route::post('create/player/{id}','')->name('createPlayer');
   Route::get('update/activity/{id}','AdminController@getUpdateActivity')->name('updateActivity');
-  Route::get('update/uset/{id}','AdminController@getUpdateUser')->name('updateUser');
+  Route::get('update/user/{id}','AdminController@getUpdateUser')->name('updateUser');
   Route::get('update/player/{id}','AdminController@getUpdatePlayer')->name('updatePlayer');
   Route::patch('update/activity/{id}','AdminController@updateActivity')->name('updateActivity');
   Route::patch('update/users/{id}','AdminController@updateUser')->name('updateUser');

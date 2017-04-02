@@ -20,7 +20,7 @@ class AdminController extends Controller
      */
     public function getCreateActivity()
     {
-        return view('test');
+        return view('createActivity');
     }
 
     /**
@@ -34,8 +34,8 @@ class AdminController extends Controller
         Activity::create([
             'name'=>$request->name,
             'details'=>$request->details,
-            'usersNum'=>$request->usersNum,
-            'playersNum'=>$request->playersNum,
+            #'usersNum'=>$request->usersNum,
+            #'playersNum'=>$request->playersNum,
         ]);
 
 
@@ -48,7 +48,7 @@ class AdminController extends Controller
      */
     public function getCreateUser()
     {
-        return view('test');
+        return view('createuser');
     }
 
     /**
@@ -57,21 +57,24 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function postCreateUser(Request $request,$id)
+    public function postCreateUser(Request $request)
     {
     #   $activity_id=Activity::where('name','=',$name)->get('id');
-        $activity_id=$id;
+        $activity_id=$request->id;
         $this->validate($request,[
             'name'=>'required|max:50',
-            'account'=>'required|account|unique:users|max:255',
+            'account'=>'required|unique:users|max:255',
             'password'=>'required|confirmed|min:6',
-            'weight'=>'required|between:0,1';
+            'weight'=>'required|between:0,1',
+            'details'=>'required|max:50',
         ]);
         $user=User::create([
             'name'=>$request->name,
-            'account'=>$request->email,
+            'account'=>$request->account,
             'password'=>bcrypt($request->password),
-            'weight'=>($request->weight)
+            'weight'=>$request->weight,
+            'details'=>$request->details,
+            'activity_id'=>$activity_id,
         ]);
     }
 
@@ -96,19 +99,19 @@ class AdminController extends Controller
     public function getUpdateActivity($id)
     {
         $activity = Activity::findOrFail($id);
-        return view('test',compact('activity'));
+        return view('updateActivity',compact('activity'));
     }
 
     public function getUpdateUser($id)
     {
         $user = User::findOrFail($id);
-        return view('test',compact('user'));
+        return view('updateuser',compact('user'));
     }
 
     public function getUpdatePlayer($id)
     {
         $player = Player::findOrFail($id);
-        return view('test',compact('player'));
+        return view('updateplayer',compact('player'));
     }
 
     /**
@@ -120,14 +123,15 @@ class AdminController extends Controller
     public function updateUser($id,Request $request)
     {
         $this->validate($request,[
-            'name'=>'required'
-            'account'=>'required|max:50',
-            'password'=>'confirmed|min:6'
+            'name'=>'required',
+            'password'=>'confirmed|min:6',
+            'weight'=>'required|between:0,1'
         ]);
         $user=User::findOrFail($id);
         $data=[];
         $data['name']=$request->name;
         $data['weight']=$request->weight;
+        $date['details']=$request->details;
         if($request->account){
             $data['account']=$request->account;
         }
@@ -136,8 +140,6 @@ class AdminController extends Controller
         }
         $user->update($data);
         session()->flash('success', '评委资料资料更新成功！');
-
-
     }
 
 
@@ -147,10 +149,10 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updatePLayer($id,Request $request)
+    public function updatePlayer($id,Request $request)
     {
         $this->validate($request,[
-            'name'=>'required'
+            'name'=>'required',
             'details'=>'required',
         ]);
         $player=Player::findOrFail($id);
@@ -170,14 +172,14 @@ class AdminController extends Controller
     public function updateActivity($id,Request $request)
     {
         $this->validate($request,[
-            'name'=>'required'
+            'name'=>'required',
             'details'=>'required',
         ]);
         $activity=Activity::findOrFail($id);
         $data = array('name' =>$request->name ,
                       'details'=>$request->details,
-                      'usersNum'=>$request->usersNum,
-                      'playersNum'=>$request->playersNum,
+                      #'usersNum'=>$request->usersNum,
+                      #'playersNum'=>$request->playersNum,
                   );
         $activity->update($data);
         session()->flash('success', '活动资料资料更新成功！');

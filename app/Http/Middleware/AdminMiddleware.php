@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use App\Models\User;
+use Auth;
 
 class AdminMiddleware
 {
@@ -14,7 +15,6 @@ class AdminMiddleware
      * @var Guard
      */
     protected $auth;
-    protected $user;
 
     /**
      * Create a new middleware instance.
@@ -22,10 +22,9 @@ class AdminMiddleware
      * @param  Guard  $auth
      * @return void
      */
-    public function __construct(Guard $auth,User $user)
+    public function __construct(Guard $auth)
     {
         $this->auth = $auth;
-        $this->user = $user;
     }
 
     /**
@@ -43,7 +42,7 @@ class AdminMiddleware
             } else {
                 return redirect()->guest('login');
             }
-        }elseif (!($this->user->isAdmin)) {
+        }elseif (!(Auth::user()->isAdmin)) {
             return redirect('/');
         }
 

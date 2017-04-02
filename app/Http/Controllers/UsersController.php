@@ -63,14 +63,14 @@ class UsersController extends Controller
         $user_id = Auth::id();
         if($this->isMarking($id))
             {
-                session()->flash('danger','你已经对该选手评分了')；
+                session()->flash('danger','你已经对该选手评分了');
                 return redirect()->route('index');
             }else
             {
                 $score = Score::create([
-                    'player_id' = $player_id,
-                    'user_id' = $user_id,
-                    'score' = $request->score
+                    'player_id' => $player_id,
+                    'user_id' => $user_id,
+                    'score' => $request->score
                 ]);
                 session()->falsh('success','评分成功');
                 return redirect()->route('index');
@@ -81,8 +81,8 @@ class UsersController extends Controller
     {
         $player_id = $id;
         $user_id = Auth::id();
-        if($check=Score::where('player_id' => $player_id)
-                            ->where('user_id' => $user_id))
+        $check = Score::where('player_id','=',$player_id|'user_id','=',$user_id);
+        if($check)
         {return 'true'; }else{return 'false';}
     }
 

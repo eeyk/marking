@@ -19,7 +19,7 @@ class SessionsController extends Controller
      */
     public function create()
     {
-        return view('test');
+        return view('login');
     }
 
     /**
@@ -43,10 +43,13 @@ class SessionsController extends Controller
         if (Auth::attempt($credentials,$request->has('remember')))
         {
           session()->flash('success','欢迎登录！');
+          $user=Auth::user();
+          if(Auth::check()) echo "登录";
           return redirect()->intended(route('index'));
         }else {
-          session()->flash('danger','很抱歉，您的帐号和密码不匹配')；
-          return redirect()->back();
+          session()->flash('danger','很抱歉，您的帐号和密码不匹配');
+          dd($credentials);
+          #return redirect()->back();
         }
     }
 
@@ -57,7 +60,7 @@ class SessionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
         Auth::logout();
         session()->flash('success','您已经成功退出');
