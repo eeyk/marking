@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\Player;
 use App\Models\User;
+use App\Models\Score;
 
 class AdminController extends Controller
 {
@@ -46,10 +47,10 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getCreateUser()
-    {
-        return view('createuser');
-    }
+    // public function getCreateUser()
+    // {
+    //     return view('createuser');
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -76,6 +77,13 @@ class AdminController extends Controller
             'details'=>$request->details,
             'activity_id'=>$activity_id,
         ]);
+        $activity=Activity::findOrFail($activity_id);
+        $data['usersNum']=$activity->usersNum+1;
+        $activity->update($data);
+
+
+        session()->flash('success','裁判已经成功创建');
+        return redirect()->back();
     }
 
     public function getCreatePlayer()
@@ -91,10 +99,13 @@ class AdminController extends Controller
      */
     public function showActivity($id)
     {
-        /**
-        * @return id对应的活动，选手，评委
-        */
+        $activity=Activity::findOrFail($id);
+        $users=User::where('activity_id','=',$id)->get();
+        $players=Player::where('activity_id','=',$id)->get();
+        return view('activity',compact('activity','users','players'));
     }
+
+
 
     public function getUpdateActivity($id)
     {
@@ -185,6 +196,23 @@ class AdminController extends Controller
         session()->flash('success', '活动资料资料更新成功！');
     }
 
+    public function rank($id)
+    {
+        $playerRank = Player::where('id','=',$id)->get(array('name','score'));
+    }
+
+
+    public function rankAll($id)
+    {
+        $activity_id=$id;
+        $activity=Activity::findOrFail($activity_id)->get(array('name','details'))->first();
+        #$activity = Activity::where('id','=',$activity_id)->get(array('name','details'))->first();
+        $playerRank = Player::where('activity_id','=',$activity_id)->orderBy('score','desc')->get(array('name','score'));
+        return view('rankall',compact('playerRank','activity'));
+    }
+
+
+
     /**
      * Remove the specified resource from storage.
      *
@@ -193,6 +221,17 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::where('activity_id','=',$id)->delete();
+        Player::where('activity_id','=',$id)->delete();
+        Activity::where('id','=',$id)->delete();
+        Score::where('activity_id','=',$id)->delete();
+    }
+
+    public function restore($id)
+    {
+        User::withTrashed()->where('activity_id','=',$id)->restore();
+        Player::withTrashed()->where('activity_id','=',$id)->restore();
+        Activity::withTrashed()->where('id','=',$id)->restore();
+        Score::withTrashed()->where('activity_id','=',$id)->restore();
     }
 }

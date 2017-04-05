@@ -48,8 +48,7 @@ class SessionsController extends Controller
           return redirect()->intended(route('index'));
         }else {
           session()->flash('danger','很抱歉，您的帐号和密码不匹配');
-          dd($credentials);
-          #return redirect()->back();
+          return redirect()->back();
         }
     }
 

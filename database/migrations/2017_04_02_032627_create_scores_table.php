@@ -17,6 +17,7 @@ class CreateScoresTable extends Migration
             $table->string('user_id');
             $table->string('player_id');
             $table->float('score');
+            $table->float('weight');
             $table->timestamps();
             $table->softDeletes();
         });
