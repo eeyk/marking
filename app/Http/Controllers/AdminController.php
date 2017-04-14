@@ -3,64 +3,38 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\Player;
 use App\Models\User;
 use App\Models\Score;
+use Excel;
+use App\jobs\CreatePlayer;
+use App\jobs\CreateUser;
 
 class AdminController extends Controller
 {
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function getCreateActivity()
     {
         return view('createActivity');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function postCreateActivity(Request $request)
     {
         Activity::create([
             'name'=>$request->name,
             'details'=>$request->details,
-            #'usersNum'=>$request->usersNum,
-            #'playersNum'=>$request->playersNum,
         ]);
-
-
+        session()->flash('success','成功创建活动');
+        return redirect()->route('index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // public function getCreateUser()
-    // {
-    //     return view('createuser');
-    // }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+/*
     public function postCreateUser(Request $request)
     {
-    #   $activity_id=Activity::where('name','=',$name)->get('id');
         $activity_id=$request->id;
         $this->validate($request,[
             'name'=>'required|max:50',
@@ -81,31 +55,25 @@ class AdminController extends Controller
         $data['usersNum']=$activity->usersNum+1;
         $activity->update($data);
 
-
         session()->flash('success','裁判已经成功创建');
         return redirect()->back();
     }
-
-    public function getCreatePlayer()
+*/
+    public function createPlayer(Request $request)
     {
-        return view('test');
+        $activity_id=$request->id;
+        $site='player.xls';
+        $job=new CreatePlayer($activity_id,$site);
+        $this->dispatch($job);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showActivity($id)
+    public function createUser(Request $request)
     {
-        $activity=Activity::findOrFail($id);
-        $users=User::where('activity_id','=',$id)->get();
-        $players=Player::where('activity_id','=',$id)->get();
-        return view('activity',compact('activity','users','players'));
+        $activity_id=$request->id;
+        $site='user.xls';
+        $job=new CreateUser($activity_id,$site);
+        $this->dispatch($job);
     }
-
-
 
     public function getUpdateActivity($id)
     {
@@ -125,12 +93,6 @@ class AdminController extends Controller
         return view('updateplayer',compact('player'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function updateUser($id,Request $request)
     {
         $this->validate($request,[
@@ -142,7 +104,7 @@ class AdminController extends Controller
         $data=[];
         $data['name']=$request->name;
         $data['weight']=$request->weight;
-        $date['details']=$request->details;
+        $data['details']=$request->details;
         if($request->account){
             $data['account']=$request->account;
         }
@@ -150,16 +112,11 @@ class AdminController extends Controller
             $data['password']=bcrypt($request->password);
         }
         $user->update($data);
-        session()->flash('success', '评委资料资料更新成功！');
+        session()->flash('success', '评委资料更新成功！');
+        return redirect()->route('showActivity',$user->activity_id);
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function updatePlayer($id,Request $request)
     {
         $this->validate($request,[
@@ -170,16 +127,11 @@ class AdminController extends Controller
         $data = array('name' =>$request->name ,
                       'details'=>$request->details );
         $player->update($data);
-        session()->flash('success', '选手资料资料更新成功！');
+        session()->flash('success', '选手资料更新成功！');
+        return redirect()->route('showActivity',$player->activity_id);
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function updateActivity($id,Request $request)
     {
         $this->validate($request,[
@@ -187,44 +139,43 @@ class AdminController extends Controller
             'details'=>'required',
         ]);
         $activity=Activity::findOrFail($id);
-        $data = array('name' =>$request->name ,
+        $data = array('name' =>$request->name,
                       'details'=>$request->details,
-                      #'usersNum'=>$request->usersNum,
-                      #'playersNum'=>$request->playersNum,
                   );
         $activity->update($data);
-        session()->flash('success', '活动资料资料更新成功！');
+        session()->flash('success', '活动资料更新成功！');
+        return redirect()->route('showActivity',$id);
     }
 
-    public function rank($id)
+    public function admin()
     {
-        $playerRank = Player::where('id','=',$id)->get(array('name','score'));
+        $activities=Activity::all();
+        return view('admin',compact('activities'));
     }
 
-
-    public function rankAll($id)
+    public function showActivity($id)
     {
-        $activity_id=$id;
-        $activity=Activity::findOrFail($activity_id)->get(array('name','details'))->first();
-        #$activity = Activity::where('id','=',$activity_id)->get(array('name','details'))->first();
-        $playerRank = Player::where('activity_id','=',$activity_id)->orderBy('score','desc')->get(array('name','score'));
-        return view('rankall',compact('playerRank','activity'));
+        $activity=Activity::findOrFail($id);
+        $users=User::where('activity_id','=',$id)->get();
+        $players=Player::where('activity_id','=',$id)->get();
+        return view('activity',compact('activity','users','players'));
     }
 
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function oldActivities()
     {
+        $oldActivities=Activity::onlyTrashed()->get();
+        return view('oldActivities',compact('oldActivities'));
+    }
+
+    public function destroy(Request $request)
+    {
+        $id=$request->id;
         User::where('activity_id','=',$id)->delete();
         Player::where('activity_id','=',$id)->delete();
         Activity::where('id','=',$id)->delete();
         Score::where('activity_id','=',$id)->delete();
+        session()->flash('success','活动结束');
+        return redirect()->route('index');
     }
 
     public function restore($id)
@@ -233,5 +184,7 @@ class AdminController extends Controller
         Player::withTrashed()->where('activity_id','=',$id)->restore();
         Activity::withTrashed()->where('id','=',$id)->restore();
         Score::withTrashed()->where('activity_id','=',$id)->restore();
+        session()->flash('success','活动已成功恢复');
+        return redirect()->route('index');
     }
 }

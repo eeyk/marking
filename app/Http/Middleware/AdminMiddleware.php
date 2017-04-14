@@ -43,7 +43,7 @@ class AdminMiddleware
                 return redirect()->guest('login');
             }
         }elseif (!(Auth::user()->isAdmin)) {
-            return redirect('/');
+            return redirect()->route('index');
         }
 
         return $next($request);

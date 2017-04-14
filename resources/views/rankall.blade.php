@@ -1,9 +1,8 @@
 <label for="name">名称：</label>
-<input type="text" name="name" class="form-control" value="{{ $activity->name }}">
+{{ $activity->name }}<br>
 
 <label for="name">描述：</label>
-<input type="text" name="details" class="form-control" value="{{ $activity->details }}">
-
+{{ $activity->details }}<br>
 <ul class="users">
 <h2>选手</h2>
 @foreach ($playerRank as $player)

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -12,22 +11,21 @@ use App\Models\User;
 class SessionsController extends Controller
 {
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function index()
+    {
+        if (!Auth::check()) {
+            return redirect()->guest('login');
+        }elseif (!(Auth::user()->isAdmin)) {
+            return redirect('getAllPlayers');
+        }
+        return redirect('admin');
+    }
+
     public function create()
     {
         return view('login');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request,[
@@ -43,22 +41,13 @@ class SessionsController extends Controller
         if (Auth::attempt($credentials,$request->has('remember')))
         {
           session()->flash('success','欢迎登录！');
-          $user=Auth::user();
-          if(Auth::check()) echo "登录";
-          return redirect()->intended(route('index'));
+          return redirect()->route('index');
         }else {
           session()->flash('danger','很抱歉，您的帐号和密码不匹配');
           return redirect()->back();
         }
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy()
     {
         Auth::logout();
