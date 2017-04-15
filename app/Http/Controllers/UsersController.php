@@ -47,28 +47,29 @@ class UsersController extends Controller
 
     public function postScore(Request $request,$id)
     {
-        $player_id = $id;
-        $user_id = Auth::id();
-        $weight=Auth::user()->weight;
-        $activity_id=Auth::user()->activity_id;
-        $user_activity_id=Auth::user()->activity_id;
-        $player = Player::findOrFail($player_id);
-        $player_activity_id=$player->activity_id;
-        $player_score=$player->score;
-        if(($player_activity_id!=$user_activity_id) or ($this->isMarking($id)))
+        $player=Player::findOrFail($id);
+        $user=Auth::user();
+        $activity=Activity::findOrFail($player->activity_id);
+        $group='group'.$user->group;
+        $groupNums=$activity->$group;
+        if(($player->activity_id!=$user->activity_id) or ($this->isMarking($id)))
             {
                 session()->flash('danger','无法修改评分');
                 return redirect()->route('index');
             }else
             {
-                $score = Score::create([
-                    'player_id' => $player_id,
-                    'user_id' => $user_id,
-                    'score' => ($request->score),
-                    'activity_id'=>$activity_id,
-                    'weight'=>$weight,
+                $this->validate($request,[
+                  'score' => 'required',
                 ]);
-                $data['score']=$player_score+($request->score)*$weight;
+                $score = Score::create([
+                    'player_id' => $player->id,
+                    'user_id' => $user->id,
+                    'score' => ($request->score),
+                    'activity_id'=>$activity->id,
+                    'weight'=>$user->weight,
+                    'groupNums'=>$groupNums,
+                ]);
+                $data['score']=$player->score+($request->score)*($user->weight)/($groupNums);
                 $player->update($data);
                 session()->flash('success','评分成功');
                 return redirect()->route('index');

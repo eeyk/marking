@@ -20,6 +20,7 @@ class CreatePlayersTable extends Migration
             $table->float('score');
             $table->timestamps();
             $table->softDeletes();
+            $table->boolean('isMarking')->default(false);
         });
     }
 

@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->boolean('isAdmin');
             $table->softDeletes();
+            $table->string('group');
         });
     }
 

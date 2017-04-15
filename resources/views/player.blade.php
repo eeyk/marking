@@ -10,7 +10,7 @@
   {{csrf_field()}}
     <div>
       评分
-      <input type="text" name="score" value="{{ $data['score'] }}">
+      <input type="text" name="score" placeholder="{{ $data['score'] }}">
       <input type="hidden" name="id" value="{{ $data['id'] }}">
      <button type="submit">提交</button>
    </div>

@@ -15,6 +15,7 @@ use Excel;
 use App\jobs\CreatePlayer;
 use App\jobs\CreateUser;
 
+
 class AdminController extends Controller
 {
     public function getCreateActivity()
@@ -61,18 +62,16 @@ class AdminController extends Controller
 */
     public function createPlayer(Request $request)
     {
-        $activity_id=$request->id;
-        $site='player.xls';
-        $job=new CreatePlayer($activity_id,$site);
+        $job=new CreatePlayer($request);
         $this->dispatch($job);
+        return redirect()->route('showActivity',$request->id);
     }
 
     public function createUser(Request $request)
     {
-        $activity_id=$request->id;
-        $site='user.xls';
-        $job=new CreateUser($activity_id,$site);
+        $job=new CreateUser($request);
         $this->dispatch($job);
+        return redirect()->route('showActivity',$request->id);
     }
 
     public function getUpdateActivity($id)

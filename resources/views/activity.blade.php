@@ -29,18 +29,17 @@
 </ul>
 
 <h1>添加裁判</h1>
-    <form method="POST" action="{{route('createUser')}}">
+    <form method="POST" action="{{route('createUser')}}" enctype="multipart/form-data">
         {!! csrf_field() !!}
         <input type="hidden" name="id" value="{{$activity->id}}">
-        <div>
-            <button type="submit">添加裁判</button>
-        </div>
+        <input type="file" name="file"><br/><br/>
+        <button type="submit">添加裁判</button>
+
     </form>
     <h1>添加选手</h1>
-        <form method="POST" action="{{route('createPlayer')}}">
+        <form method="POST" action="{{route('createPlayer')}}" enctype="multipart/form-data">
             {!! csrf_field() !!}
             <input type="hidden" name="id" value="{{$activity->id}}">
-            <div>
-                <button type="submit">添加选手</button>
-            </div>
+            <input type="file" name="file"><br/><br/>
+            <button type="submit">添加选手</button>
         </form>
