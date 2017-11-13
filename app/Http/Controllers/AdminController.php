@@ -110,9 +110,31 @@ class AdminController extends Controller
 */
     public function createPlayer(Request $request)
     {
-        $job = new CreatePlayer($request);
-        $this->dispatch($job);
+
+        // $job = new CreatePlayer($request);
+        // $this->dispatch($job);
     //    return redirect()->route('showActivity',$request->id);
+        $activity_id=$request->id;
+        $file = $request->file('file');
+        $newFileName = md5(time().rand(0,10000)).'.'.$file->getClientOriginalExtension();
+        $file = $file->move('xls/',$newFileName);
+        $file = 'xls/'.$newFileName;
+
+        $data['playersNum'] = 0;
+        $inputPlayers = Excel::selectSheetsByIndex(0)->load($file,function($reader){})->ignoreEmpty()->get();
+        foreach ($inputPlayers as $inputPlayer) {
+            $player = Player::create([
+                'name'=>$inputPlayer->name,
+                'details'=>$inputPlayer->details,
+                'activity_id'=>$activity_id,
+                'group' => $inputPlayer->group,
+            ]);
+            $data['playersNum'] = $data['playersNum']+1;
+        }
+        $activity = Activity::findOrFail($activity_id);
+        $data['playersNum'] = $activity->playersNum+$data['playersNum'];
+        $activity->update($data);
+
         return response()->json(array('url'=>route('showActivity',$request->id)));
 
     }
