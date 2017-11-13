@@ -22,7 +22,7 @@ Route::group(['middleware'=>'auth'],function(){
 Route::group(['middleware'=>'admin'],function(){
 
     Route::get('activity/{id}','AdminController@showActivity')->name('showActivity');
-//    Route::get('create/activity','AdminController@getCreateActivity')->name('createActivity');
+    Route::get('create/activity','AdminController@getCreateActivity')->name('createActivity');
     Route::post('create/activity','AdminController@postCreateActivity')->name('createActivity');
     Route::post('createPlayer','AdminController@createPlayer')->name('createPlayer');
     Route::post('createUser','AdminController@createUser')->name('createUser');

@@ -48,6 +48,11 @@ class AdminController extends Controller
         return response()->json($data);
     }
 
+    public function getCreateActivity()
+    {
+        return view('createActivity');
+    }
+
     public function showActivity($id)
     {
         $activity = Activity::findOrFail($id);
