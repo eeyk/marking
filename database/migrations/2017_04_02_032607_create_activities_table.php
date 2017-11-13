@@ -19,9 +19,10 @@ class CreateActivitiesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->integer('playersNum')->default(0);
-            $table->string('groupA');
-            $table->string('groupB');
-            $table->string('groupC');
+            $table->string('levelA');
+            $table->string('levelB');
+            $table->string('levelC');
+            $table->string('img');
         });
     }
 

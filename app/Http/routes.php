@@ -13,15 +13,16 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/getAllPlayers','UsersController@getAllPlayers')->name('getAllPlayers');
     Route::get('player/{id}','UsersController@show')->name('playerDetail');
     Route::post('marking/{id}','UsersController@postScore')->name('marking');
-    Route::get('ranking/{id}','UsersController@rank')->name('rank');
+//    Route::get('ranking/{id}','UsersController@rank')->name('rank');
     Route::get('rankall/{id}','UsersController@rankAll')->name('rankAll');
+    Route::get('groupRank/{id}/{group}','UsersController@groupRank')->name('groupRank');
 
 });
 
 Route::group(['middleware'=>'admin'],function(){
 
     Route::get('activity/{id}','AdminController@showActivity')->name('showActivity');
-    Route::get('create/activity','AdminController@getCreateActivity')->name('createActivity');
+//    Route::get('create/activity','AdminController@getCreateActivity')->name('createActivity');
     Route::post('create/activity','AdminController@postCreateActivity')->name('createActivity');
     Route::post('createPlayer','AdminController@createPlayer')->name('createPlayer');
     Route::post('createUser','AdminController@createUser')->name('createUser');
@@ -32,10 +33,11 @@ Route::group(['middleware'=>'admin'],function(){
     Route::patch('update/user/{id}','AdminController@updateUser')->name('updateUser');
     Route::patch('update/player/{id}','AdminController@updatePlayer')->name('updatePlayer');
     Route::delete('delete/{id}','AdminController@destroy')->name('deleteActivity');
-    Route::get('oldActivities','AdminController@oldActivities')->name('oldActivities');
     Route::get('restore/{id}','AdminController@restore')->name('restoreActivity');
     Route::get('admin','AdminController@admin')->name('admin');
+    Route::get('marked/player/{id}','AdminController@markedPlayer')->name('markedPlayer');
+    Route::get('unMarked/player/{id}','AdminController@unMarkedPlayer')->name('unMarkedPlayer');
+    Route::get('marked/player/detail/{id}','AdminController@markedPlayerDetail')->name('markedPlayerDetail');
+    Route::get('unMarked/player/detail/{id}','AdminController@unMarkedPlayerDetail')->name('unMarkedPlayerDetail');
+
 });
-Route::get('test/{id}','UsersController@isMarking');
-#Route::get('testdelete/{id}','AdminController@destroy');
-#Route::get('testrestore/{id}','AdminController@restore');

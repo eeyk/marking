@@ -40,18 +40,15 @@ class SessionsController extends Controller
 
         if (Auth::attempt($credentials,$request->has('remember')))
         {
-          session()->flash('success','欢迎登录！');
-          return redirect()->route('index');
+          return redirect()->route('index')->with('status',true);
         }else {
-          session()->flash('danger','很抱歉，您的帐号和密码不匹配');
-          return redirect()->back();
+          return redirect()->back()->with('status',false);
         }
     }
 
     public function destroy()
     {
         Auth::logout();
-        session()->flash('success','您已经成功退出');
         return redirect('login');
     }
 }

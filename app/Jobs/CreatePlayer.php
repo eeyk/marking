@@ -26,10 +26,10 @@ class CreatePlayer extends Job implements SelfHandling, ShouldQueue
     public function __construct(Request $request)
     {
         $this->activity_id=$request->id;
-        $this->file=$request->file('file');
+        $this->file = $request->file('file');
         $newFileName = md5(time().rand(0,10000)).'.'.$this->file->getClientOriginalExtension();
-        $this->file=$this->file->move('xls/',$newFileName);
-        $this->file='xls/'.$newFileName;
+        $this->file = $this->file->move('xls/',$newFileName);
+        $this->file = 'xls/'.$newFileName;
     }
 
     /**
@@ -39,18 +39,19 @@ class CreatePlayer extends Job implements SelfHandling, ShouldQueue
      */
     public function handle()
     {
-        $data['playersNum']=0;
+        $data['playersNum'] = 0;
         $inputPlayers = Excel::selectSheetsByIndex(0)->load($this->file,function($reader){})->ignoreEmpty()->get();
         foreach ($inputPlayers as $inputPlayer) {
-            $player=Player::create([
+            $player = Player::create([
                 'name'=>$inputPlayer->name,
                 'details'=>$inputPlayer->details,
                 'activity_id'=>$this->activity_id,
+                'group' => $this->group,
             ]);
-            $data['playersNum']=$data['playersNum']+1;
+            $data['playersNum'] = $data['playersNum']+1;
         }
-        $activity=Activity::findOrFail($this->activity_id);
-        $data['playersNum']=$activity->playersNum+$data['playersNum'];
+        $activity = Activity::findOrFail($this->activity_id);
+        $data['playersNum'] = $activity->playersNum+$data['playersNum'];
         $activity->update($data);
     }
 }

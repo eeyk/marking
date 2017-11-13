@@ -25,11 +25,11 @@ class CreateUser extends Job implements SelfHandling, ShouldQueue
      */
      public function __construct(Request $request)
      {
-         $this->activity_id=$request->id;
-         $this->file=$request->file('file');
+         $this->activity_id = $request->id;
+         $this->file = $request->file('file');
          $newFileName = md5(time().rand(0,10000)).'.'.$this->file->getClientOriginalExtension();
-         $this->file=$this->file->move('xls/',$newFileName);
-         $this->file='xls/'.$newFileName;
+         $this->file = $this->file->move('xls/',$newFileName);
+         $this->file = 'xls/'.$newFileName;
      }
     /**
      * Execute the job.
@@ -38,36 +38,36 @@ class CreateUser extends Job implements SelfHandling, ShouldQueue
      */
     public function handle()
     {
-        $data['groupA']=0;$data['groupB']=0;$data['groupC']=0;
+        $data['levelA']=0;$data['levelB']=0;$data['levelC']=0;
         $inputUsers = Excel::selectSheetsByIndex(0)->load($this->file,function($reader){})->ignoreEmpty()->get();
             foreach ($inputUsers as $inputUser) {
-                $user=User::create([
+                $user = User::create([
                     'name'=>$inputUser->name,
                     'details'=>$inputUser->details,
                     'account'=>$inputUser->account,
                     'password'=>bcrypt($inputUser->password),
                     'weight'=>$inputUser->weight,
                     'activity_id'=>$this->activity_id,
-                    'group'=>$inputUser->group,
+                    'level'=>$inputUser->level,
                 ]);
-                switch ($inputUser->group) {
+                switch ($inputUser->level) {
                     case 'A':
-                        $data['groupA']=$data['groupA']+1;
+                        $data['levelA']=$data['levelA']+1;
                         break;
                     case 'B':
-                        $data['groupB']=$data['groupB']+1;
+                        $data['levelB']=$data['levelB']+1;
                         break;
                     case 'C':
-                        $data['groupC']=$data['groupC']+1;
+                        $data['levelC']=$data['levelC']+1;
                         break;
                     default:
                         break;
                 }
             }
-            $activity=Activity::findOrFail($this->activity_id);
-            $data['groupA']=$activity->groupA+$data['groupA'];
-            $data['groupB']=$activity->groupB+$data['groupB'];
-            $data['groupC']=$activity->groupC+$data['groupC'];
+            $activity = Activity::findOrFail($this->activity_id);
+            $data['levelA'] = $activity->levelA+$data['levelA'];
+            $data['levelB'] = $activity->levelB+$data['levelB'];
+            $data['levelC'] = $activity->levelC+$data['levelC'];
             $activity->update($data);
     }
 }

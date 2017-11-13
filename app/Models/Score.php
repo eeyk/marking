@@ -11,5 +11,5 @@ class Score extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['user_id', 'player_id', 'score','activity_id','weight','groupNums'];
+    protected $fillable = ['user_id', 'player_id', 'score','activity_id','weight','levelNums'];
 }

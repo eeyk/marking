@@ -11,7 +11,7 @@ class Player extends Model
 
     protected $table = 'players';
 
-    protected $fillable = ['name', 'details', 'score','activity_id'];
+    protected $fillable = ['name', 'details', 'score','activity_id','group','isMarking','img'];
 
     protected $dates = ['deleted_at'];
 
