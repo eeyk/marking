@@ -50,7 +50,7 @@ class AdminController extends Controller
 
     public function getCreateActivity()
     {
-        return view('createActivity');
+        return view('createactivity');
     }
 
     public function showActivity($id)
