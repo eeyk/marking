@@ -6,7 +6,7 @@ Route::group(['middleware'=>'guest'],function(){
     Route::post('login','SessionsController@store')->name('login');
 
 });
-Route::delete('logout','SessionsController@destroy')->name('logout')->middleware('auth');
+Route::get('logout','SessionsController@destroy')->name('logout')->middleware('auth');
 
 Route::group(['middleware'=>'auth'],function(){
 

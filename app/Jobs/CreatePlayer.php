@@ -46,7 +46,7 @@ class CreatePlayer extends Job implements SelfHandling, ShouldQueue
                 'name'=>$inputPlayer->name,
                 'details'=>$inputPlayer->details,
                 'activity_id'=>$this->activity_id,
-                'group' => $this->group,
+                'group' => $inputPlayer->group,
             ]);
             $data['playersNum'] = $data['playersNum']+1;
         }

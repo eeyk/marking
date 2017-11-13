@@ -44,7 +44,7 @@ class AdminController extends Controller
                            'id'=>$oldActivity->id,
           );
         }
-        $data['olaActivityNum'] = $i-$data['activityNum'];
+        $data['oldActivityNum'] = $i-$data['activityNum'];
         return response()->json($data);
     }
 
@@ -53,7 +53,8 @@ class AdminController extends Controller
         $activity = Activity::findOrFail($id);
         $users = User::where('activity_id','=',$id)->get(array('id','name'));
         $players = Player::where('activity_id','=',$id)->get(array('id','name','score'));
-    //    return view('activity',compact('activity','users','players'));
+        return view('activity',compact('activity','users','players'));
+/*
         return response()->json(array(
                             'status'=>true,
                             'url'=>route('showActivity',$id),
@@ -61,6 +62,7 @@ class AdminController extends Controller
                             'users'=>$users,
                             'players'=>$players,
                           ));
+*/
     }
 
     public function postCreateActivity(Request $request)

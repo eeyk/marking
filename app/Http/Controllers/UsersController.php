@@ -18,8 +18,9 @@ class UsersController extends Controller
 
     public function getAllPlayers()
     {
-        $id=Auth::user()->activity_id;
-        $activity=Activity::findOrFail($id);
+        $id = Auth::user()->activity_id;
+        if(!Activity::where('id',$id)->exists()) return response()->json(array('status'=>false,'url'=>route('getAllPlayers')));
+        $activity = Activity::findOrFail($id);
         $players = Player::where('activity_id','=',$id)->get();
         foreach ($players as $player) {
             $player->isMarking=$this->isMarking($player->id);
@@ -53,10 +54,11 @@ class UsersController extends Controller
 
     public function show($id)
     {
+        if(!Player::where('id',$id)->exists()) return response()->json(array('status'=>false));
         $player = Player::findOrFail($id);
-        $isMarking=$this->isMarking($id);
-        $player_id=$id;
-        $user_id=Auth::id();
+        $isMarking = $this->isMarking($id);
+        $player_id = $id;
+        $user_id = Auth::id();
         $data = array('details' => $player->details ,
                            'id' => $player->id,
                           'name'=>$player->name,
@@ -66,9 +68,9 @@ class UsersController extends Controller
         {$data['score']=Score::where('player_id','=',$player_id)
                              ->where('user_id','=',$user_id)
                              ->first()->score;
-        }else{$data['score']=0;}
-    //    return view('player',compact('data'));
-        return response()->json(array('player'=>$data));
+        }else{$data['score'] = 0;}
+        return view('player',compact('data'));
+    //    return response()->json(array('player'=>$data,'status'=>true));
 
     }
 
@@ -124,7 +126,7 @@ class UsersController extends Controller
     public function groupRank($id,$group)
     {
         $activity_id = $id;
-        $activity = Activity::where('id',$activity_id)->get(array('name','image'))->first();
+        $activity = Activity::where('id',$activity_id)->get(array('name','img'))->first();
         $playerRank = Player::where('activity_id',$activity_id)
                             ->where('group',$group)
                             ->orderBy('score','desc')
@@ -141,7 +143,7 @@ class UsersController extends Controller
           );
         }
         $data['num'] = $i;
-        $data['activity'] = array('name'=>$activity->name,'image'=>$activity->image);
+        $data['activity'] = array('name'=>$activity->name,'img'=>$activity->img);
         $data['url'] = route('groupRank',$id,$group);
         $data['status'] = true;
         return response()->json($data);
@@ -150,7 +152,7 @@ class UsersController extends Controller
     public function rankAll($id)
     {
         $activity_id = $id;
-        $activity = Activity::where('id','=',$activity_id)->get(array('name','image'))->first();
+        $activity = Activity::where('id','=',$activity_id)->get(array('name','img'))->first();
         $playerRank = Player::where('activity_id','=',$activity_id)->orderBy('score','desc')->get(array('name','score'));
         //return view('rankall',compact('playerRank','activity'));
         $data = array();
@@ -164,7 +166,7 @@ class UsersController extends Controller
                         );
         }
          $data['num'] = $i;
-         $data['activity'] = array('name'=>$activity->name,'image'=>$activity->image);
+         $data['activity'] = array('name'=>$activity->name,'img'=>$activity->img);
          $data['url'] = route('rankAll',$activity_id);
          $data['status'] = true;
          return response()->json($data);
