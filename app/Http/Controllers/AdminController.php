@@ -141,9 +141,47 @@ class AdminController extends Controller
 
     public function createUser(Request $request)
     {
-        $job = new CreateUser($request);
-        $this->dispatch($job);
+        // $job = new CreateUser($request);
+        // $this->dispatch($job);
     //    return redirect()->route('showActivity',$request->id);
+        $activity_id=$request->id;
+        $file = $request->file('file');
+        $newFileName = md5(time().rand(0,10000)).'.'.$file->getClientOriginalExtension();
+        $file = $file->move('xls/',$newFileName);
+        $file = 'xls/'.$newFileName;
+
+        $data['levelA']=0;$data['levelB']=0;$data['levelC']=0;
+        $inputUsers = Excel::selectSheetsByIndex(0)->load($file,function($reader){})->ignoreEmpty()->get();
+            foreach ($inputUsers as $inputUser) {
+                $user = User::create([
+                    'name'=>$inputUser->name,
+                    'details'=>$inputUser->details,
+                    'account'=>$inputUser->account,
+                    'password'=>bcrypt($inputUser->password),
+                    'weight'=>$inputUser->weight,
+                    'activity_id'=>$activity_id,
+                    'level'=>$inputUser->level,
+                ]);
+                switch ($inputUser->level) {
+                    case 'A':
+                        $data['levelA']=$data['levelA']+1;
+                        break;
+                    case 'B':
+                        $data['levelB']=$data['levelB']+1;
+                        break;
+                    case 'C':
+                        $data['levelC']=$data['levelC']+1;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            $activity = Activity::findOrFail($activity_id);
+            $data['levelA'] = $activity->levelA+$data['levelA'];
+            $data['levelB'] = $activity->levelB+$data['levelB'];
+            $data['levelC'] = $activity->levelC+$data['levelC'];
+            $activity->update($data);
+
         return response()->json(array('url'=>route('showActivity',$request->id)));
 
     }
