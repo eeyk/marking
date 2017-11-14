@@ -207,9 +207,10 @@ class AdminController extends Controller
     public function getUpdatePlayer($id)
     {
         if(!Player::where('id',$id)->exists()) {return response()->json(array('status'=>false));}
-        $player = Player::where('id',$id)->get(array('id','activity_id','name','details','score','isMarking','group','img'));
-        //  return view('updateplayer',compact('player'));
-        return response()->json(array('player'=>$player,'url'=>route('updatePlayer',$id),'status'=>true));
+    //    $player = Player::where('id',$id)->get(array('id','activity_id','name','details','score','isMarking','group','img'));
+          $player = Player::findOrFail($id);
+          //return view('updateplayer',compact('player'));
+          return response()->json(array('player'=>$player,'url'=>route('updatePlayer',$id),'status'=>true));
     }
 
     public function updateUser($id,Request $request)
@@ -238,28 +239,32 @@ class AdminController extends Controller
 
     public function updatePlayer($id,Request $request)
     {
+
         $this->validate($request,[
             'name'=>'required',
             'details'=>'required',
-            'url'=>'required',
+            'img'=>'required',
             'group'=>'required',
         ]);
+
         $player = Player::findOrFail($id);
         $data = array('name' =>$request->name ,
                       'details'=>$request->details,
-                      'url'=>$request->url,
+                      'img'=>$request->img,
                       'group'=>$request->group,
                   );
 
-        if($request->file('file')->exists())
+        if($request->file('file'))
         {
             $file = $request->file('file');
             $newFileName = md5(time().rand(0,10000)).'.'.$file->getClientOriginalExtension();
             $file = $file->move('img/',$newFileName);
             $file = 'img/'.$newFileName;
             $data['img'] = $file;
-        }
-
+        }else
+            {
+                $data['img'] = $player->img;
+            }
         $player->update($data);
         //    return redirect()->route('showActivity',$player->activity_id)->with('status','true');
         return response()->json(array('status'=>true,'url'=>route('showActivity',$player->activity_id)));
@@ -278,13 +283,15 @@ class AdminController extends Controller
                       'details'=>$request->details,
                   );
 
-        if($request->file('file')->exists())
+        if($request->file('file'))
         {
             $file = $request->file('file');
             $newFileName = md5(time().rand(0,10000)).'.'.$file->getClientOriginalExtension();
             $file = $file->move('img/',$newFileName);
             $file = 'img/'.$newFileName;
             $data['img'] = $file;
+        }else {
+            $data['img'] = $activity->img;
         }
 
         $activity->update($data);

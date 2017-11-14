@@ -6,16 +6,14 @@
         @include('errors')
         @include('msg')
 
-        <form method="POST" action="{{ route('updatePlayer', $player->id )}}">
-            {{ method_field('PATCH') }}
-            {{ csrf_field() }}
+            <form method="POST" action="{{ route('updatePlayer', $player->id )}}" enctype="multipart/form-data">
+                {!! csrf_field() !!}
+                <label for="name">名称：</label>
+                 <input type="text" name="name" class="form-control" value="{{ $player->name }}">
 
-             <label for="name">名称：</label>
-              <input type="text" name="name" class="form-control" value="{{ $player->name }}">
-
-              <label for="name">描述：</label>
-              <input type="text" name="details" class="form-control" value="{{ $player->details }}">
-
-
-            <button type="submit" class="btn btn-primary">更新</button>
-        </form>
+                 <label for="name">描述：</label>
+                 <input type="text" name="details" class="form-control" value="{{ $player->details }}">
+                  <h1>上传图片</h1>
+                <input type="file" name="file"><br/><br/>
+                <button type="submit">上传图片</button>
+            </form>

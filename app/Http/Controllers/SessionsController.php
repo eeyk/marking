@@ -42,13 +42,13 @@ class SessionsController extends Controller
         {
           return response()->json(array('status'=>true,'url'=>route('index')));
         }else {
-            return response()->json(array('status'=>true,'url'=>route('login')));
+            return response()->json(array('status'=>false,'url'=>route('login')));
         }
     }
 
     public function destroy()
     {
         Auth::logout();
-        return redirect('login');
+        return response()->json(array('status'=>true,'url'=>route('login')));
     }
 }

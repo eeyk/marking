@@ -29,9 +29,9 @@ Route::group(['middleware'=>'admin'],function(){
     Route::get('update/activity/{id}','AdminController@getUpdateActivity')->name('updateActivity');
     Route::get('update/user/{id}','AdminController@getUpdateUser')->name('updateUser');
     Route::get('update/player/{id}','AdminController@getUpdatePlayer')->name('updatePlayer');
-    Route::patch('update/activity/{id}','AdminController@updateActivity')->name('updateActivity');
-    Route::patch('update/user/{id}','AdminController@updateUser')->name('updateUser');
-    Route::patch('update/player/{id}','AdminController@updatePlayer')->name('updatePlayer');
+    Route::post('update/activity/{id}','AdminController@updateActivity')->name('updateActivity');
+    Route::post('update/user/{id}','AdminController@updateUser')->name('updateUser');
+    Route::post('update/player/{id}','AdminController@updatePlayer')->name('updatePlayer');
     Route::delete('delete/{id}','AdminController@destroy')->name('deleteActivity');
     Route::get('restore/{id}','AdminController@restore')->name('restoreActivity');
     Route::get('admin','AdminController@admin')->name('admin');
