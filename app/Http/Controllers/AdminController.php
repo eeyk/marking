@@ -23,29 +23,30 @@ class AdminController extends Controller
 
     public function admin()
     {
-        $activities=Activity::all();
-        $oldActivities = Activity::onlyTrashed()->get();
+        $activities = Activity::get(array('id','name','details','img'));
+        $oldActivities = Activity::onlyTrashed()->get(array('name','id','details','img'));
     //    return view('admin',compact('activities','oldActivities'));
-        $data = array();
-        $data['url'] = route('admin');
-        $i = 0;
-        foreach($activities as $activity)
-        {
-          $i = $i+1;
-          $data[$i] = array('name'=>$activity->name,
-                           'id'=>$activity->id,
-          );
-        }
-        $data['activityNum'] = $i;
-        foreach($oldActivities as $oldActivity)
-        {
-          $i = $i+1;
-          $data[$i] = array('name'=>$oldActivity->name,
-                           'id'=>$oldActivity->id,
-          );
-        }
-        $data['oldActivityNum'] = $i-$data['activityNum'];
-        return response()->json($data);
+        // $data = array();
+        // $data['url'] = route('admin');
+        // $i = 0;
+        // foreach($activities as $activity)
+        // {
+        //   $i = $i+1;
+        //   $data[$i] = array('name'=>$activity->name,
+        //                    'id'=>$activity->id,
+        //   );
+        // }
+        // $data['activityNum'] = $i;
+        // foreach($oldActivities as $oldActivity)
+        // {
+        //   $i = $i+1;
+        //   $data[$i] = array('name'=>$oldActivity->name,
+        //                    'id'=>$oldActivity->id,
+        //   );
+        // }
+        // $data['oldActivityNum'] = $i-$data['activityNum'];
+        // return response()->json($data);
+        return response()->json(array('activities'=>$activities,'oldActivities'=>$oldActivities,'url'=>route('admin'),'status'=>true));
     }
 
     public function getCreateActivity()
@@ -55,11 +56,12 @@ class AdminController extends Controller
 
     public function showActivity($id)
     {
-        $activity = Activity::findOrFail($id);
+        if(!Activity::where('id',$id)->exists()) {return response()->json(array('status'=>false));}
+        $activity = Activity::where('id',$id)->get(array('id','name','details','img'));
         $users = User::where('activity_id','=',$id)->get(array('id','name'));
         $players = Player::where('activity_id','=',$id)->get(array('id','name','score'));
-        return view('activity',compact('activity','users','players'));
-/*
+//        return view('activity',compact('activity','users','players'));
+
         return response()->json(array(
                             'status'=>true,
                             'url'=>route('showActivity',$id),
@@ -67,7 +69,7 @@ class AdminController extends Controller
                             'users'=>$users,
                             'players'=>$players,
                           ));
-*/
+
     }
 
     public function postCreateActivity(Request $request)
@@ -188,23 +190,26 @@ class AdminController extends Controller
 
     public function getUpdateActivity($id)
     {
-        $activity = Activity::findOrFail($id);
+        if(!Activity::where('id',$id)->exists()) {return response()->json(array('status'=>false));}
+        $activity = Activity::where('id',$id)->get(array('id','name','details','img'));
         //  return view('updateActivity',compact('activity'));
-         return response()->json(array('activity'=>$activity,'url'=>route('updateActivity',$id)));
+         return response()->json(array('activity'=>$activity,'url'=>route('updateActivity',$id),'status'=>true));
     }
 
     public function getUpdateUser($id)
     {
-        $user = User::findOrFail($id);
+        if(!User::where('id',$id)->exists()) {return response()->json(array('status'=>false));}
+        $user = User::where('id',$id)->get(array('id','activity_id','name','details','weight','level'));
         //  return view('updateuser',compact('user'));
-        return response()->json(array('user'=>$user,'url'=>route('updateUser',$id)));
+        return response()->json(array('user'=>$user,'url'=>route('updateUser',$id),'status'=>true));
     }
 
     public function getUpdatePlayer($id)
     {
-        $player = Player::findOrFail($id);
+        if(!Player::where('id',$id)->exists()) {return response()->json(array('status'=>false));}
+        $player = Player::where('id',$id)->get(array('id','activity_id','name','details','score','isMarking','group','img'));
         //  return view('updateplayer',compact('player'));
-        return response()->json(array('player'=>$player,'url'=>route('updatePlayer',$id)));
+        return response()->json(array('player'=>$player,'url'=>route('updatePlayer',$id),'status'=>true));
     }
 
     public function updateUser($id,Request $request)
@@ -245,6 +250,16 @@ class AdminController extends Controller
                       'url'=>$request->url,
                       'group'=>$request->group,
                   );
+
+        if($request->file('file')->exists())
+        {
+            $file = $request->file('file');
+            $newFileName = md5(time().rand(0,10000)).'.'.$file->getClientOriginalExtension();
+            $file = $file->move('img/',$newFileName);
+            $file = 'img/'.$newFileName;
+            $data['img'] = $file;
+        }
+
         $player->update($data);
         //    return redirect()->route('showActivity',$player->activity_id)->with('status','true');
         return response()->json(array('status'=>true,'url'=>route('showActivity',$player->activity_id)));
@@ -257,10 +272,21 @@ class AdminController extends Controller
             'name'=>'required',
             'details'=>'required',
         ]);
-        $activity=Activity::findOrFail($id);
+
+        $activity = Activity::findOrFail($id);
         $data = array('name' =>$request->name,
                       'details'=>$request->details,
                   );
+
+        if($request->file('file')->exists())
+        {
+            $file = $request->file('file');
+            $newFileName = md5(time().rand(0,10000)).'.'.$file->getClientOriginalExtension();
+            $file = $file->move('img/',$newFileName);
+            $file = 'img/'.$newFileName;
+            $data['img'] = $file;
+        }
+
         $activity->update($data);
         //  return redirect()->route('showActivity',$id)->with('status','true');
         return response()->json(array('status'=>true,'url'=>route('showActivity',$id)));
@@ -296,7 +322,8 @@ class AdminController extends Controller
        {
          $players = Player::where('activity_id',$activity_id)
                           ->where('isMarking','1')
-                          ->get();
+                          ->orderBy('score','desc')
+                          ->get(array('id','name','score'));
       //    return view('markedPlayer',compact('players'))->with('status','true');
       //  }else{
       //    return view('markedPlayer')->with('status','false');
@@ -317,7 +344,7 @@ class AdminController extends Controller
        {
          $players = Player::where('activity_id',$activity_id)
                           ->where('isMarking','<','1')
-                          ->get();
+                          ->get(array('id','name'));
       //    return view('unMarkedPlayer',compact('players'))->with('status','success');
       //  }else{
       //    return view('unMarkedPlayer')->with('status','false');
@@ -330,9 +357,15 @@ class AdminController extends Controller
 
     public function markedPlayerDetail($id)
     {
-        $player = Player::findorFail($id);
+        if(!Player::where('id',$id)->exists()) {return response()->json(array('status'=>false));}
+        $player = Player::findOrFail($id);
         if($player->isMarking < '1'){return response()->json(array('status'=>false,'url'=>route('markedPlayerDetail',$id)));}
-        $score = Score::where('player_id',$id)->get();
+        $player = Player::where('id',$id)->get(array('id','name','score'));
+        $score = Score::where('player_id',$id)->get(array('user_id','score','weight'));
+        foreach ($score as  $value) {
+            $user = User::where('id',$value->user_id)->first();
+            $value->name = $user->name;
+        }
     //    return view('markedPlayerDetail',compact('player','scores'));
         return response()->json(array('player'=>$player,'score'=>$score,'status'=>true,'url'=>route('markedPlayerDetail',$id)));
     }
@@ -347,24 +380,28 @@ class AdminController extends Controller
 
     public function unMarkedPlayerDetail($id)
     {
-      $player = Player::findorFail($id);
-      if($player->isMarking >= '1'){return response()->json(array('status'=>false,'url'=>route('markedPlayerDetail',$id)));}
-      $activity_id = $player->activity_id;
-      $users = User::where('activity_id',$activity_id)->get(array('id','name','weight'));
-      foreach ($users as $user)
-      {
-        if($this->isMarking($id,$user->id))
+        if(!Player::where('id',$id)->exists()) {return response()->json(array('status'=>false));}
+        $player = Player::findorFail($id);
+        if($player->isMarking >= '1'){return response()->json(array('status'=>false,'url'=>route('markedPlayerDetail',$id)));}
+        $activity_id = $player->activity_id;
+        $users = User::where('activity_id',$activity_id)->get(array('id','name','weight'));
+        foreach ($users as $user)
         {
-          $user->score = Score::where('player_id',$id)
+            if($this->isMarking($id,$user->id))
+            {
+                $user->score = Score::where('player_id',$id)
                               ->where('user_id',$user->id)
                               ->first()
                               ->score;
-        }else{
-          $user->score = 0;
+                $user->isMarking = true;
+            }else{
+                $user->isMarking = false;
+                $user->score = 0;
+                }
         }
-      }
-  //  return view('unMarkedPlayerDetail',compact('player','users'));
-      return response()->json(array('player'=>$player,'users'=>$users,'status'=>true,'url'=>route('unMarkedPlayerDetail',$id)));
+        $player = Player::where('id',$id)->get(array('id','name','score'));
+        //  return view('unMarkedPlayerDetail',compact('player','users'));
+        return response()->json(array('player'=>$player,'users'=>$users,'status'=>true,'url'=>route('unMarkedPlayerDetail',$id)));
 
     }
 

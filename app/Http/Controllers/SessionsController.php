@@ -40,9 +40,9 @@ class SessionsController extends Controller
 
         if (Auth::attempt($credentials,$request->has('remember')))
         {
-          return redirect()->route('index')->with('status',true);
+          return response()->json(array('status'=>true,'url'=>route('index')));
         }else {
-          return redirect()->back()->with('status',false);
+            return response()->json(array('status'=>true,'url'=>route('login')));
         }
     }
 
