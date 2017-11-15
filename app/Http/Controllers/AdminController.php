@@ -191,7 +191,7 @@ class AdminController extends Controller
     public function getUpdateActivity($id)
     {
         if(!Activity::where('id',$id)->exists()) {return response()->json(array('status'=>false));}
-        $activity = Activity::where('id',$id)->get(array('id','name','details','img'));
+        $activity = Activity::where('id',$id)->first(array('id','name','details','img'));
         //  return view('updateActivity',compact('activity'));
          return response()->json(array('activity'=>$activity,'url'=>route('updateActivity',$id),'status'=>true));
     }
@@ -199,7 +199,7 @@ class AdminController extends Controller
     public function getUpdateUser($id)
     {
         if(!User::where('id',$id)->exists()) {return response()->json(array('status'=>false));}
-        $user = User::where('id',$id)->get(array('id','activity_id','name','details','weight','level'));
+        $user = User::where('id',$id)->first(array('id','activity_id','name','details','weight','level'));
         //  return view('updateuser',compact('user'));
         return response()->json(array('user'=>$user,'url'=>route('updateUser',$id),'status'=>true));
     }
@@ -207,8 +207,7 @@ class AdminController extends Controller
     public function getUpdatePlayer($id)
     {
         if(!Player::where('id',$id)->exists()) {return response()->json(array('status'=>false));}
-    //    $player = Player::where('id',$id)->get(array('id','activity_id','name','details','score','isMarking','group','img'));
-          $player = Player::findOrFail($id);
+        $player = Player::where('id',$id)->first(array('id','activity_id','name','details','score','isMarking','group','img'));
           //return view('updateplayer',compact('player'));
           return response()->json(array('player'=>$player,'url'=>route('updatePlayer',$id),'status'=>true));
     }
@@ -367,7 +366,7 @@ class AdminController extends Controller
         if(!Player::where('id',$id)->exists()) {return response()->json(array('status'=>false));}
         $player = Player::findOrFail($id);
         if($player->isMarking < '1'){return response()->json(array('status'=>false,'url'=>route('markedPlayerDetail',$id)));}
-        $player = Player::where('id',$id)->get(array('id','name','score'));
+        $player = Player::where('id',$id)->first(array('id','name','score'));
         $score = Score::where('player_id',$id)->get(array('user_id','score','weight'));
         foreach ($score as  $value) {
             $user = User::where('id',$value->user_id)->first();
@@ -406,7 +405,7 @@ class AdminController extends Controller
                 $user->score = 0;
                 }
         }
-        $player = Player::where('id',$id)->get(array('id','name','score'));
+        $player = Player::where('id',$id)->first(array('id','name','score'));
         //  return view('unMarkedPlayerDetail',compact('player','users'));
         return response()->json(array('player'=>$player,'users'=>$users,'status'=>true,'url'=>route('unMarkedPlayerDetail',$id)));
 

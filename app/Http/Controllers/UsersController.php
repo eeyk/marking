@@ -20,7 +20,7 @@ class UsersController extends Controller
     {
         $id = Auth::user()->activity_id;
         if(!Activity::where('id',$id)->exists()) return response()->json(array('status'=>false,'url'=>route('getAllPlayers')));
-        $activity = Activity::where('id',$id)->get(array('id','name','details','img'));
+        $activity = Activity::where('id',$id)->first(array('id','name','details','img'));
         $players = Player::where('activity_id','=',$id)->get(array('id','name','details','score','isMarking','group','img'));
         foreach ($players as $player) {
             $player->isMarking = $this->isMarking($player->id);
