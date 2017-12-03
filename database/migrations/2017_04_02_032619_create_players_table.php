@@ -23,6 +23,7 @@ class CreatePlayersTable extends Migration
             $table->float('isMarking')->default(0);
             $table->string('group');
             $table->string('img');
+            $table->string('groupName');
         });
     }
 

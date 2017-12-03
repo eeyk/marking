@@ -22,6 +22,7 @@ Route::group(['middleware'=>'auth'],function(){
 Route::group(['middleware'=>'admin'],function(){
 
     Route::get('activity/{id}','AdminController@showActivity')->name('showActivity');
+    Route::get('oldActivity/{id}','AdminController@showOldActivity')->name('showOldActivity');
     Route::get('create/activity','AdminController@getCreateActivity')->name('createActivity');
     Route::post('create/activity','AdminController@postCreateActivity')->name('createActivity');
     Route::post('createPlayer','AdminController@createPlayer')->name('createPlayer');
@@ -32,7 +33,7 @@ Route::group(['middleware'=>'admin'],function(){
     Route::post('update/activity/{id}','AdminController@updateActivity')->name('updateActivity');
     Route::post('update/user/{id}','AdminController@updateUser')->name('updateUser');
     Route::post('update/player/{id}','AdminController@updatePlayer')->name('updatePlayer');
-    Route::delete('delete/{id}','AdminController@destroy')->name('deleteActivity');
+    Route::get('delete/{id}','AdminController@destroy')->name('deleteActivity');
     Route::get('restore/{id}','AdminController@restore')->name('restoreActivity');
     Route::get('admin','AdminController@admin')->name('admin');
     Route::get('marked/player/{id}','AdminController@markedPlayer')->name('markedPlayer');

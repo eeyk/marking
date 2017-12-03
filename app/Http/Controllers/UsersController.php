@@ -19,12 +19,23 @@ class UsersController extends Controller
     public function getAllPlayers()
     {
         $id = Auth::user()->activity_id;
-        if(!Activity::where('id',$id)->exists()) return response()->json(array('status'=>false,'url'=>route('getAllPlayers')));
+        if(!Activity::where('id',$id)->exists()) return response()->json(array('status'=>false,'url'=>route('getAllPlayers'),'msg'=>'活动不存在'));
         $activity = Activity::where('id',$id)->first(array('id','name','details','img'));
-        $players = Player::where('activity_id','=',$id)->get(array('id','name','details','score','isMarking','group','img'));
-        foreach ($players as $player) {
-            $player->isMarking = $this->isMarking($player->id);
-        }
+        if(!PLayer::where('activity_id',$id)->exists()) return response()->json(array('status'=>false,'url'=>route('getAllPlayers'),'msg'=>'还没有选手'));
+        $temp = Player::where('activity_id',$id)->orderBy('group','desc')->get(array('group'));
+        $groupNums = $temp->first()->group;
+        for($i=1;$i<=$groupNums;$i++)
+            {
+                $data['group'.$i] = Player::where('activity_id','=',$id)->where('group',$i)->get(array('id','name','details','score','isMarking','group','img','groupName'));
+                foreach ($data['group'.$i] as $player) {
+                    $player->isMarking = $this->isMarking($player->id);
+                }
+            }
+        // $players = Player::where('activity_id','=',$id)->get(array('id','name','details','score','isMarking','group','img','groupName'));
+        // foreach ($players as $player) {
+        //     $player->isMarking = $this->isMarking($player->id);
+        // }
+
         //  return view('getAllPlayers',compact('players','activity'));
         //  返回json数据
         // $data = array();
@@ -45,7 +56,7 @@ class UsersController extends Controller
         // $data['num'] = $i;
         //return response()->json(compact('data'));
         return response()->json(array(
-                                'players'=>$players,
+                                'players'=>$data,
                                 'activity'=>$activity,
                                 'url'=>route('getAllPlayers'),
                                 'status'=>true,
@@ -54,7 +65,7 @@ class UsersController extends Controller
 
     public function show($id)
     {
-        if(!Player::where('id',$id)->exists()) return response()->json(array('status'=>false));
+        if(!Player::where('id',$id)->exists()) return response()->json(array('status'=>false,'msg'=>'该选手不存在'));
         $player = Player::findOrFail($id);
         $isMarking = $this->isMarking($id);
         $player_id = $id;
@@ -84,7 +95,7 @@ class UsersController extends Controller
         $levelNums = $activity->$level;
         if(($player->activity_id!=$user->activity_id) or ($this->isMarking($id)))
             {
-                return response()->json(array('status'=>false,'url'=>route('playerDetail',$id)));
+                return response()->json(array('status'=>false,'url'=>route('playerDetail',$id),'msg'=>'您无法对其他活动的选手评分'));
             }else
             {
                 $this->validate($request,[
