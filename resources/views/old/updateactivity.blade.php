@@ -7,7 +7,7 @@
         @include('msg')
 
         <form method="POST" action="{{ route('updateActivity', $activity->id )}}">
-            {{ method_field('PATCH') }}
+            {{ method_field('POST') }}
             {{ csrf_field() }}
 
              <label for="name">名称：</label>

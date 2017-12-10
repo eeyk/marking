@@ -21,7 +21,7 @@ class CreatePlayersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->float('isMarking')->default(0);
-            $table->string('group');
+            $table->integer('group');
             $table->string('img');
             $table->string('groupName');
         });

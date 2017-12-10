@@ -12,6 +12,7 @@ use App\Models\Activity;
 use App\Models\Player;
 use App\Models\User;
 use App\Models\Score;
+use Auth;
 
 use Excel;
 use App\jobs\CreatePlayer;
@@ -23,47 +24,32 @@ class AdminController extends Controller
 
     public function admin()
     {
+        $name = Auth::user()->name;
         $activities = Activity::get(array('id','name','details','img'));
         $oldActivities = Activity::onlyTrashed()->get(array('name','id','details','img'));
     //    return view('admin',compact('activities','oldActivities'));
-        // $data = array();
-        // $data['url'] = route('admin');
-        // $i = 0;
-        // foreach($activities as $activity)
-        // {
-        //   $i = $i+1;
-        //   $data[$i] = array('name'=>$activity->name,
-        //                    'id'=>$activity->id,
-        //   );
-        // }
-        // $data['activityNum'] = $i;
-        // foreach($oldActivities as $oldActivity)
-        // {
-        //   $i = $i+1;
-        //   $data[$i] = array('name'=>$oldActivity->name,
-        //                    'id'=>$oldActivity->id,
-        //   );
-        // }
-        // $data['oldActivityNum'] = $i-$data['activityNum'];
-        // return response()->json($data);
-        return response()->json(array('activities'=>$activities,'oldActivities'=>$oldActivities,'url'=>route('admin'),'status'=>true));
+        return view('admin')->with('activities',$activities)
+                            ->with('oldActivities',$oldActivities)
+                            ->with('name',$name);
+
     }
 
     public function getCreateActivity()
     {
-        return view('createactivity');
+        $name = Auth::user()->name;
+        return view('createactivity')->with('name',$name);
     }
 
     public function showActivity($id)
     {
-        if(!Activity::where('id',$id)->exists()) {return response()->json(array('status'=>false,'msg'=>'活动不存在或已经结束'));}
-        if(!User::where('activity_id',$id)->exists()) {return response()->json(array('status'=>false,'msg'=>'还未创建评委'));}
-        if(!Player::where('activity_id',$id)->exists()) {return response()->json(array('status'=>false,'msg'=>'还未创建选手'));}
-        $activity = Activity::where('id',$id)->get(array('id','name','details','img'));
+        if(!Activity::where('id',$id)->exists()) {session()->flash('waring','活动不存在或已经结束'); return redirect()->back();}
+        if(!User::where('activity_id',$id)->exists()) {session()->flash('waring','还未创建评委'); return redirect()->back();}
+        if(!Player::where('activity_id',$id)->exists()) {session()->flash('waring','还未创建选手'); return redirect()->back();}
+        $activity = Activity::where('id',$id)->first(array('id','name','details','img'));
         $users = User::where('activity_id','=',$id)->get(array('id','name','weight'));
         $players = Player::where('activity_id','=',$id)->get(array('id','name','score'));
-//        return view('activity',compact('activity','users','players'));
-
+        //return view('activity',compact('activity','users','players'));
+        /*
         return response()->json(array(
                             'status'=>true,
                             'url'=>route('showActivity',$id),
@@ -71,15 +57,30 @@ class AdminController extends Controller
                             'users'=>$users,
                             'players'=>$players,
                           ));
+        */
+        return view('activity')->with('activity',$activity)
+                               ->with('users',$users)
+                               ->with('players',$players);
 
     }
 
     public function postCreateActivity(Request $request)
     {
-        Activity::create([
-            'name'=>$request->name,
-            'details'=>$request->details,
-        ]);
+        $data = array('name' =>$request->name,
+                      'details'=>$request->details,
+                  );
+
+        if($request->file('file'))
+        {
+            $file = $request->file('file');
+            $newFileName = md5(time().rand(0,10000)).'.'.$file->getClientOriginalExtension();
+            $file = $file->move('img/',$newFileName);
+            $file = 'img/'.$newFileName;
+            $data['img'] = $file;
+        }else {
+            $data['img'] = $activity->img;
+        }
+        Activity::create($data);
         //  return redirect()->route('index')->with('status','true');
         return response()->json(array('status'=>true,'url'=>route('admin')));
     }
@@ -114,11 +115,7 @@ class AdminController extends Controller
 */
     public function createPlayer(Request $request)
     {
-
-        // $job = new CreatePlayer($request);
-        // $this->dispatch($job);
-    //    return redirect()->route('showActivity',$request->id);
-        $activity_id=$request->id;
+        $activity_id = $request->id;
         $file = $request->file('file');
         $newFileName = md5(time().rand(0,10000)).'.'.$file->getClientOriginalExtension();
         $file = $file->move('xls/',$newFileName);
@@ -146,10 +143,7 @@ class AdminController extends Controller
 
     public function createUser(Request $request)
     {
-        // $job = new CreateUser($request);
-        // $this->dispatch($job);
-    //    return redirect()->route('showActivity',$request->id);
-        $activity_id=$request->id;
+        $activity_id = $request->id;
         $file = $request->file('file');
         $newFileName = md5(time().rand(0,10000)).'.'.$file->getClientOriginalExtension();
         $file = $file->move('xls/',$newFileName);
@@ -193,26 +187,41 @@ class AdminController extends Controller
 
     public function getUpdateActivity($id)
     {
-        if(!Activity::where('id',$id)->exists()) {return response()->json(array('status'=>false));}
+        if(!Activity::where('id',$id)->exists())
+        {
+            session()->flash('waring','活动不存在或已经结束');
+            return redirect()->back();
+        }
         $activity = Activity::where('id',$id)->first(array('id','name','details','img'));
         //  return view('updateActivity',compact('activity'));
-         return response()->json(array('activity'=>$activity,'url'=>route('updateActivity',$id),'status'=>true));
+        // return response()->json(array('activity'=>$activity,'url'=>route('updateActivity',$id),'status'=>true));
+         return view('updateActivity')->with('activity',$activity);
     }
 
     public function getUpdateUser($id)
     {
-        if(!User::where('id',$id)->exists()) {return response()->json(array('status'=>false));}
+        if(!User::where('id',$id)->exists())
+        {
+            session()->flash('waring','评委不存在或活动已经结束');
+            return redirect()->back();
+        }
         $user = User::where('id',$id)->first(array('id','activity_id','name','details','weight','level'));
         //  return view('updateuser',compact('user'));
-        return response()->json(array('user'=>$user,'url'=>route('updateUser',$id),'status'=>true));
+        //return response()->json(array('user'=>$user,'url'=>route('updateUser',$id),'status'=>true));
+        return view('updateUser')->with('user',$user);
     }
 
     public function getUpdatePlayer($id)
     {
-        if(!Player::where('id',$id)->exists()) {return response()->json(array('status'=>false));}
+        if(!Player::where('id',$id)->exists())
+        {
+            session()->flash('waring','选手不存在或活动已经结束');
+            return redirect()->back();
+        }
         $player = Player::where('id',$id)->first(array('id','activity_id','name','details','score','isMarking','group','img'));
-          //return view('updateplayer',compact('player'));
-          return response()->json(array('player'=>$player,'url'=>route('updatePlayer',$id),'status'=>true));
+        //return view('updateplayer',compact('player'));
+        //return response()->json(array('player'=>$player,'url'=>route('updatePlayer',$id),'status'=>true));
+        return view('updatePlayer')->with('player',$player);
     }
 
     public function updateUser($id,Request $request)
@@ -220,7 +229,6 @@ class AdminController extends Controller
         $this->validate($request,[
             'name'=>'required',
             'password'=>'confirmed|min:6',
-            //'weight'=>'required|between:0,1'
         ]);
         $user = User::findOrFail($id);
         $data = [];
@@ -311,7 +319,7 @@ class AdminController extends Controller
         Player::where('activity_id','=',$id)->delete();
         Activity::where('id','=',$id)->delete();
         Score::where('activity_id','=',$id)->delete();
-        return redirect()->route('index');
+        return response()->json(array('status'=>true,'url'=>route('index')));
     }
 
     public function restore($id)
@@ -320,24 +328,32 @@ class AdminController extends Controller
         Player::withTrashed()->where('activity_id','=',$id)->restore();
         Activity::withTrashed()->where('id','=',$id)->restore();
         Score::withTrashed()->where('activity_id','=',$id)->restore();
-        return redirect()->route('index');
+        return response()->json(array('status'=>true,'url'=>route('index')));
     }
 
     public function showOldActivity($id)
     {
-        if(!Activity::onlyTrashed()->where('id',$id)->exists()) {return response()->json(array('status'=>false));}
-        $activity = Activity::onlyTrashed()->where('id',$id)->first(array('name'));
+        if(!Activity::onlyTrashed()->where('id',$id)->exists()) //{return response()->json(array('status'=>false));}
+        {
+            session()->flash('warning','该活动不存在或没有结束');
+
+        }
+        $oldActivity = Activity::onlyTrashed()->where('id',$id)->first(array('name'));
         $users = User::onlyTrashed()->where('activity_id','=',$id)->get(array('id','name'));
         $players = Player::onlyTrashed()->where('activity_id','=',$id)->orderBy('score','desc')->get(array('id','name','score'));
-//        return view('activity',compact('activity','users','players'));
-
+//      return view('activity',compact('activity','users','players'));
+        return view('oldActivity')->with('oldActivity',$oldActivity)
+                       ->with('users',$users)
+                       ->with('players',$players);
+        /*
         return response()->json(array(
                             'status'=>true,
                             'url'=>route('showOldActivity',$id),
-                            'activity'=>$activity,
+                            'oldActivity'=>$oldActivity,
                             'users'=>$users,
                             'players'=>$players,
                           ));
+        */
     }
 
     public function markedPlayer($id)
@@ -352,14 +368,17 @@ class AdminController extends Controller
                           ->where('isMarking','1')
                           ->orderBy('score','desc')
                           ->get(array('id','name','score'));
-      //    return view('markedPlayer',compact('players'))->with('status','true');
-      //  }else{
-      //    return view('markedPlayer')->with('status','false');
-      //  }
+         return view('markedPlayer')->with('players',$players);
+        }else{
+          session()->falsh('warning','没有发现完成评分的选手');
+          return redirect()->back();
+        }
+        /*
           return response()->json(array('players'=>$players,'status'=>true,'url'=>route('markedPlayer',$id)));
         }else{
           return response()->json(array('status'=>false,'url'=>route('markedPlayer',$id)));
         }
+        */
     }
 
     public function unMarkedPlayer($id)
@@ -393,17 +412,32 @@ class AdminController extends Controller
                 }
             }
         }
+        return view('unMarkedPlayer')->with('players',$players);
+    }else{
+        session()->falsh('warning','没有发现未完成评分的选手');
+        return redirect()->back();
+    }
+          /*
           return response()->json(array('players'=>$players,'status'=>true,'url'=>route('unMarkedPlayer',$id)));
         }else{
           return response()->json(array('status'=>false,'url'=>route('unMarkedPlayer',$id)));
         }
+        */
     }
 
     public function markedPlayerDetail($id)
     {
-        if(!Player::where('id',$id)->exists()) {return response()->json(array('status'=>false));}
+        if(!Player::where('id',$id)->exists()) //{return response()->json(array('status'=>false));}
+        {
+            session()->flash('warning','选手不存在');
+            return redirect()->back();
+        }
         $player = Player::findOrFail($id);
-        if($player->isMarking < '1'){return response()->json(array('status'=>false,'url'=>route('markedPlayerDetail',$id)));}
+        if($player->isMarking < '1')//{return response()->json(array('status'=>false,'url'=>route('markedPlayerDetail',$id)));}
+        {
+            session()->falsh('warning','该选手评分未完成');
+            return redirect()->back();
+        }
         $player = Player::where('id',$id)->first(array('id','name','score'));
         $score = Score::where('player_id',$id)->get(array('user_id','score','weight'));
         foreach ($score as  $value) {
@@ -411,7 +445,9 @@ class AdminController extends Controller
             $value->name = $user->name;
         }
     //    return view('markedPlayerDetail',compact('player','scores'));
-        return response()->json(array('player'=>$player,'score'=>$score,'status'=>true,'url'=>route('markedPlayerDetail',$id)));
+    //    return response()->json(array('player'=>$player,'score'=>$score,'status'=>true,'url'=>route('markedPlayerDetail',$id)));
+          return view('markedPlayerDetail')->with('player',$player)
+                                          ->with('score',$score);
     }
 
     public function isMarking($player_id,$user_id)
@@ -424,9 +460,17 @@ class AdminController extends Controller
 
     public function unMarkedPlayerDetail($id)
     {
-        if(!Player::where('id',$id)->exists()) {return response()->json(array('status'=>false));}
+        if(!Player::where('id',$id)->exists()) //{return response()->json(array('status'=>false));}
+        {
+            session()->flash('warning','选手不存在');
+            return redirect()->back();
+        }
         $player = Player::findorFail($id);
-        if($player->isMarking >= '1'){return response()->json(array('status'=>false,'url'=>route('markedPlayerDetail',$id)));}
+        if($player->isMarking >= '1')//{return response()->json(array('status'=>false,'url'=>route('markedPlayerDetail',$id)));}
+        {
+            session()->falsh('warning','该选手评分已完成');
+            return redirect()->back();
+        }
         $activity_id = $player->activity_id;
         $users = User::where('activity_id',$activity_id)->get(array('id','name','weight'));
         foreach ($users as $user)
@@ -444,9 +488,10 @@ class AdminController extends Controller
                 }
         }
         $player = Player::where('id',$id)->first(array('id','name','score'));
-        //  return view('unMarkedPlayerDetail',compact('player','users'));
-        return response()->json(array('player'=>$player,'users'=>$users,'status'=>true,'url'=>route('unMarkedPlayerDetail',$id)));
-
+        //return view('unMarkedPlayerDetail',compact('player','users'));
+        //return response()->json(array('player'=>$player,'users'=>$users,'status'=>true,'url'=>route('unMarkedPlayerDetail',$id)));
+        return view('unMarkedPlayerDetail')->with('player',$player)
+                                           ->with('users',$users);
     }
 
 }

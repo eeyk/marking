@@ -19,9 +19,17 @@ class UsersController extends Controller
     public function getAllPlayers()
     {
         $id = Auth::user()->activity_id;
-        if(!Activity::where('id',$id)->exists()) return response()->json(array('status'=>false,'url'=>route('getAllPlayers'),'msg'=>'活动不存在'));
+        if(!Activity::where('id',$id)->exists()) //return response()->json(array('status'=>false,'url'=>route('getAllPlayers'),'msg'=>'活动不存在'));
+        {
+            session()->flash('warning','活动不存在或已经结束');
+            return redirect()->back();
+        }
         $activity = Activity::where('id',$id)->first(array('id','name','details','img'));
-        if(!PLayer::where('activity_id',$id)->exists()) return response()->json(array('status'=>false,'url'=>route('getAllPlayers'),'msg'=>'还没有选手'));
+        if(!PLayer::where('activity_id',$id)->exists()) //return response()->json(array('status'=>false,'url'=>route('getAllPlayers'),'msg'=>'还没有选手'));
+        {
+            session()->flash('warning','目前还没有选手');
+            return redirect()->back();
+        }
         $temp = Player::where('activity_id',$id)->orderBy('group','desc')->get(array('group'));
         $groupNums = $temp->first()->group;
         for($i=1;$i<=$groupNums;$i++)
@@ -31,41 +39,25 @@ class UsersController extends Controller
                     $player->isMarking = $this->isMarking($player->id);
                 }
             }
-        // $players = Player::where('activity_id','=',$id)->get(array('id','name','details','score','isMarking','group','img','groupName'));
-        // foreach ($players as $player) {
-        //     $player->isMarking = $this->isMarking($player->id);
-        // }
-
-        //  return view('getAllPlayers',compact('players','activity'));
-        //  返回json数据
-        // $data = array();
-        // $data['status'] = true;
-        // $data['activity'] = array('name'=>$activity->name,'img'=>$activity->img);
-        // $data['url'] = route('getAllPlayers');
-        // $i = 0;
-        // foreach ($players as $player)
-        // {
-        //   $i = $i+1;
-        //   $data[$i] = array('name'=> $player->name,
-        //                 'isMarking'=> $player->isMarking,
-        //                 'details'=> $player->details,
-        //                 'group' => $player->group,
-        //
-        //   );
-        // }
-        // $data['num'] = $i;
-        //return response()->json(compact('data'));
+        return view('getAllPlayers')->with('players',$data)
+                                    ->with('activity',$activity);
+        /*
         return response()->json(array(
                                 'players'=>$data,
                                 'activity'=>$activity,
                                 'url'=>route('getAllPlayers'),
                                 'status'=>true,
                             ));
+        */
     }
 
     public function show($id)
     {
-        if(!Player::where('id',$id)->exists()) return response()->json(array('status'=>false,'msg'=>'该选手不存在'));
+        if(!Player::where('id',$id)->exists())// return response()->json(array('status'=>false,'msg'=>'该选手不存在'));
+        {
+            session()->flash('warning','选手不存在');
+            return redirect()->back();
+        }
         $player = Player::findOrFail($id);
         $isMarking = $this->isMarking($id);
         $player_id = $id;
@@ -82,7 +74,8 @@ class UsersController extends Controller
                              ->first()->score;
         }else{$data['score'] = 0;}
     //    return view('player',compact('data'));
-        return response()->json(array('player'=>$data,'status'=>true,'url'=>route('playerDetail',$id)));
+        return view('player')->with('player',$data);
+        //return response()->json(array('player'=>$data,'status'=>true,'url'=>route('playerDetail',$id)));
 
     }
 
@@ -143,26 +136,14 @@ class UsersController extends Controller
                             ->where('group',$group)
                             ->orderBy('score','desc')
                             ->get(array('name','score'));
-
-        // $data = array();
-        // $i = 0;
-        // foreach ($playerRank as $player)
-        // {
-        //   $i = $i+1;
-        //   $data[$i] = array('name'=> $player->name,
-        //                     'score'=> $player->score,
-        //
-        //   );
-        // }
-        // $data['num'] = $i;
-        // $data['activity'] = array('name'=>$activity->name,'img'=>$activity->img);
-        // $data['url'] = route('groupRank',$id,$group);
-        // $data['status'] = true;
+        /*
         return response()->json(array(
                                 'playerRank'=>$playerRank,
                                 'url'=>route('groupRank',$id).'/'.$group,
                                 'status'=>true,
                             ));
+        */
+        return view('groupRank')->with('playerRank',$playerRank);
     }
 
     public function rankAll($id)
@@ -170,28 +151,34 @@ class UsersController extends Controller
         $activity_id = $id;
         $activity = Activity::where('id','=',$activity_id)->get(array('name','img'))->first();
         $playerRank = Player::where('activity_id','=',$activity_id)->orderBy('score','desc')->get(array('name','score'));
-        //return view('rankall',compact('playerRank','activity'));
-        // $data = array();
-        // $i = 0;
-        // foreach ($playerRank as $player)
-        // {
-        //     $i = $i+1;
-        //     $data[$i] = array('name'=> $player->name,
-        //                     'score'=> $player->score,
-        //
-        //                 );
-        // }
-        //  $data['num'] = $i;
-        //  $data['activity'] = array('name'=>$activity->name,'img'=>$activity->img);
-        //  $data['url'] = route('rankAll',$activity_id);
-        //  $data['status'] = true;
-        //  return response()->json($data);
+        /*
         return response()->json(array(
                                 'playerRank'=>$playerRank,
                                 'url'=>route('rankAll',$id),
                                 'status'=>true,
                             ));
+        */
+        return view('rankall')->with('playerRank',$playerRank);
      }
 
+/*
+     public function resetPassword($id,Request $request)
+     {
+         $this->validate($request,[
+             'name'=>'required',
+             'password'=>'confirmed|min:6',
+         ]);
+         $user = User::findOrFail($id);
+         $data = [];
+         if($request->account){
+             $data['account'] = $request->account;
+         }
+         if($request->password){
+             $data['password'] = bcrypt($request->password);
+         }
+         $user->update($data);
+         return response()->json(array('status'=>true,'url'=>route('index')));
+     }
+*/
 
 }

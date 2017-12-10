@@ -14,6 +14,7 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('player/{id}','UsersController@show')->name('playerDetail');
     Route::post('marking/{id}','UsersController@postScore')->name('marking');
 //    Route::get('ranking/{id}','UsersController@rank')->name('rank');
+    Route::post('resetPassword/{id}','UsersController@resetPassword')->name('resetPassword');
     Route::get('rankall/{id}','UsersController@rankAll')->name('rankAll');
     Route::get('groupRank/{id}/{group}','UsersController@groupRank')->name('groupRank');
 
@@ -33,8 +34,8 @@ Route::group(['middleware'=>'admin'],function(){
     Route::post('update/activity/{id}','AdminController@updateActivity')->name('updateActivity');
     Route::post('update/user/{id}','AdminController@updateUser')->name('updateUser');
     Route::post('update/player/{id}','AdminController@updatePlayer')->name('updatePlayer');
-    Route::get('delete/{id}','AdminController@destroy')->name('deleteActivity');
-    Route::get('restore/{id}','AdminController@restore')->name('restoreActivity');
+    Route::delete('delete/{id}','AdminController@destroy')->name('deleteActivity');
+    Route::post('restore/{id}','AdminController@restore')->name('restoreActivity');
     Route::get('admin','AdminController@admin')->name('admin');
     Route::get('marked/player/{id}','AdminController@markedPlayer')->name('markedPlayer');
     Route::get('unMarked/player/{id}','AdminController@unMarkedPlayer')->name('unMarkedPlayer');

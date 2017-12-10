@@ -6,7 +6,7 @@
         @include('errors')
         @include('msg')
         <form method="POST" action="{{ route('updateUser', $user->id )}}">
-            {{ method_field('PATCH') }}
+            {{ method_field('POST') }}
             {{ csrf_field() }}
 
              <label for="name">名称：</label>
