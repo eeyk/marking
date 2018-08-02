@@ -1,0 +1,81 @@
+
+
+
+/*板式样式表*/
+/*包括行高字体对齐居中等*/
+
+
+
+/*身份单选框*/
+#identity{
+	text-align: center;
+}
+
+#identity input{
+	vertical-align: middle;
+}
+
+
+
+/***********************************************1440 x 900以上**********************************************/
+@media only screen and (min-width:1440px){
+	#account,#password{
+		font-size: 0.2rem;
+	}
+
+	#loginBtn{
+		font-size: 0.2rem;
+	}
+}
+
+
+
+/******************************************1366 x 768 ~ 1440 x 900******************************************/
+@media only screen and (min-width:1366px)and (max-width:1440px){
+	#account,#password{
+		font-size: 0.18rem;
+	}
+
+	#loginBtn{
+		font-size: 0.18rem;
+	}
+}
+
+
+
+/******************************************1280 x 800 ~ 1366 x 768******************************************/
+@media only screen and (min-width:1280px)and (max-width:1366px){
+	#account,#password{
+		font-size: 0.16rem;
+	}
+
+	#loginBtn{
+		font-size: 0.16rem;
+	}
+}
+
+
+
+/******************************************1024 x 768 ~ 1280 x 800******************************************/
+@media only screen and (min-width:1024px)and (max-width:1280px){
+	#account,#password{
+		font-size: 0.14rem;
+	}
+
+	#loginBtn{
+		font-size: 0.14rem;
+	}
+}
+
+
+
+/***********************************************1024 x 768以下**********************************************/
+@media only screen and (max-width:1024px){
+	#account,#password{
+		font-size: 0.12rem;
+	}
+
+	#loginBtn{
+		font-size: 0.12rem;
+	}
+}

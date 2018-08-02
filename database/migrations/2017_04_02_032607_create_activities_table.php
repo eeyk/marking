@@ -16,13 +16,9 @@ class CreateActivitiesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('details');
+            $table->string('url');
             $table->timestamps();
             $table->softDeletes();
-            $table->integer('playersNum')->default(0);
-            $table->string('levelA');
-            $table->string('levelB');
-            $table->string('levelC');
-            $table->string('img');
         });
     }
 

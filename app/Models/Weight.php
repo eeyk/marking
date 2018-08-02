@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Score extends Model
+class Weight extends Model
 {
     use SoftDeletes;
-    protected $table = 'scores';
+    protected $table = 'weights';
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['user_id', 'player_id', 'score','activity_id'];
+    protected $fillable = ['activity_id','weight','level','levelNums'];
 }

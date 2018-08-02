@@ -12,12 +12,12 @@ class CreateScoresTable extends Migration
      */
     public function up()
     {
-        Schema::create('scores', function (Blueprint $table) {
+        Schema::create('weights', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('activity_id');
-            $table->string('user_id');
-            $table->string('player_id');
-            $table->float('score');
+            $table->string('activity_id');  
+            $table->float('weight');
+            $table->string('level');
+            $table->integer('levelNums');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +30,6 @@ class CreateScoresTable extends Migration
      */
     public function down()
     {
-        Schema::drop('scores');
+        Schema::drop('weights');
     }
 }

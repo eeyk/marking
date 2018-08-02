@@ -11,7 +11,7 @@ class Activity extends Model
 
     protected $table = 'activities';
 
-    protected $fillable = ['name', 'details', 'playersNum','levelA','levelB','levelC','img'];
+    protected $fillable = ['name', 'details', 'url'];
 
     protected $dates = ['deleted_at'];
 }

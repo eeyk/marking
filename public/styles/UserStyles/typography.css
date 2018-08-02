@@ -1,0 +1,300 @@
+
+
+
+/*板式样式表*/
+/*包括行高字体对齐居中等*/
+
+
+
+#actName,#actType{
+	font-weight: bold;
+}
+
+#actName span,#actType span{
+	font-weight: normal;
+}
+
+
+
+#rankingNav a{
+	text-decoration: none;
+}
+
+#rankingNav a[ifClick=on] span:hover{
+	text-decoration: underline;
+}
+
+
+
+#rankingListTable tr{
+	text-align: center;
+}
+
+
+
+#scoringPageNav a{
+	text-overflow:ellipsis;/*让超出的用...实现*/
+    white-space:nowrap;/*禁止换行*/
+    overflow:hidden;/*超出的隐藏*/
+}
+
+#scoringPageNav a.notHadPlayerClickable{
+	text-decoration: none;
+}
+
+
+
+#playerDetails textarea{
+	vertical-align: text-top;
+}
+
+
+
+#playerScoreInput{
+	text-align: center;
+}
+
+
+
+/***********************************************1440 x 900以上**********************************************/
+@media only screen and (min-width:1440px){
+	#actName,#actType{
+		line-height: 0.84rem;
+	}
+
+
+
+	/*评委列表头部导航条*/
+	#rankingNav{
+		line-height: 0.7rem;
+	}
+
+
+
+	/*选手排名列表类型按钮*/
+	.rankingPartShowTypeBtn{
+		font-size: 0.28rem;
+	}
+
+
+
+	#rankingListTable tr{
+		line-height: 0.504rem;
+	}
+
+
+
+	/*跳转到上个活动/下个活动的导航条*/
+	#scoringPageNav{
+		line-height: 0.672rem;
+	}
+
+
+
+	#scoreLabel,#playerScoreInput{
+		font-size: 0.22rem;
+	}
+
+
+	/*提交评分按钮*/
+	#scoreBtn{
+		font-size: 0.16rem;
+		line-height: 0.336rem;
+	}
+}
+
+
+
+/******************************************1366 x 768 ~ 1440 x 900******************************************/
+@media only screen and (min-width:1366px)and (max-width:1440px){
+	#actName,#actType{
+		line-height: 0.63rem;
+	}
+
+
+
+	/*评委列表头部导航条*/
+	#rankingNav{
+		line-height: 0.525rem;
+	}
+
+
+
+	/*选手排名列表类型按钮*/
+	.rankingPartShowTypeBtn{
+		font-size: 0.21rem;
+	}
+
+
+
+	#rankingListTable tr{
+		line-height: 0.378rem;
+	}
+
+
+
+	/*跳转到上个活动/下个活动的导航条*/
+	#scoringPageNav{
+		line-height: 0.504rem;
+	}
+
+
+
+	#scoreLabel,#playerScoreInput{
+		font-size: 0.21rem;
+	}
+
+
+	/*提交评分按钮*/
+	#scoreBtn{
+		font-size: 0.15rem;
+		line-height: 0.252rem;
+	}
+}
+
+
+
+/******************************************1280 x 800 ~ 1366 x 768******************************************/
+@media only screen and (min-width:1280px)and (max-width:1366px){
+	#actName,#actType{
+		line-height: 0.6rem;
+	}
+
+
+
+	/*评委列表头部导航条*/
+	#rankingNav{
+		line-height: 0.5rem;
+	}
+
+
+
+	/*选手排名列表类型按钮*/
+	.rankingPartShowTypeBtn{
+		font-size: 0.2rem;
+	}
+
+
+
+	#rankingListTable tr{
+		line-height: 0.36rem;
+	}
+
+
+
+	/*跳转到上个活动/下个活动的导航条*/
+	#scoringPageNav{
+		line-height: 0.48rem;
+	}
+
+
+
+	#scoreLabel,#playerScoreInput{
+		font-size: 0.2rem;
+	}
+
+
+	/*提交评分按钮*/
+	#scoreBtn{
+		font-size: 0.14rem;
+		line-height: 0.24rem;
+	}
+}
+
+
+
+/******************************************1024 x 768 ~ 1280 x 800******************************************/
+@media only screen and (min-width:1024px)and (max-width:1280px){
+	#actName,#actType{
+		line-height: 0.562rem;
+	}
+
+
+
+	/*评委列表头部导航条*/
+	#rankingNav{
+		line-height: 0.469rem;
+	}
+
+
+
+	/*选手排名列表类型按钮*/
+	.rankingPartShowTypeBtn{
+		font-size: 0.184rem;
+	}
+
+
+
+	#rankingListTable tr{
+		line-height: 0.337rem;
+	}
+
+
+
+	/*跳转到上个活动/下个活动的导航条*/
+	#scoringPageNav{
+		line-height: 0.445rem;
+	}
+
+
+
+	#scoreLabel,#playerScoreInput{
+		font-size: 0.19rem;
+	}
+
+
+	/*提交评分按钮*/
+	#scoreBtn{
+		font-size: 0.13rem;
+		line-height: 0.225rem;
+	}
+}
+
+
+
+/***********************************************1024 x 768以下**********************************************/
+@media only screen and (max-width:1024px){
+	#actName,#actType{
+		line-height: 0.45rem;
+	}
+
+
+
+	/*评委列表头部导航条*/
+	#rankingNav{
+		line-height: 0.375rem;
+	}
+
+
+
+	/*选手排名列表类型按钮*/
+	.rankingPartShowTypeBtn{
+		font-size: 0.15rem;
+	}
+
+
+
+	#rankingListTable tr{
+		line-height: 0.27rem;
+	}
+
+
+
+	/*跳转到上个活动/下个活动的导航条*/
+	#scoringPageNav{
+		line-height: 0.36rem;
+	}
+
+
+
+	#scoreLabel,#playerScoreInput{
+		font-size: 0.18rem;
+	}
+
+
+	/*提交评分按钮*/
+	#scoreBtn{
+		font-size: 0.12rem;
+		line-height: 0.18rem;
+	}
+}

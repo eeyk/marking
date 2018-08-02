@@ -7,39 +7,43 @@ Route::group(['middleware'=>'guest'],function(){
 
 });
 Route::get('logout','SessionsController@destroy')->name('logout')->middleware('auth');
+Route::get('getIdentityAction','SessionsController@identity')->middleware('auth');
+Route::get('test/{id}','AdminController@isTotallyMarked');
 
 Route::group(['middleware'=>'auth'],function(){
 
-    Route::get('/getAllPlayers','UsersController@getAllPlayers')->name('getAllPlayers');
-    Route::get('player/{id}','UsersController@show')->name('playerDetail');
-    Route::post('marking/{id}','UsersController@postScore')->name('marking');
-//    Route::get('ranking/{id}','UsersController@rank')->name('rank');
-    Route::post('resetPassword/{id}','UsersController@resetPassword')->name('resetPassword');
-    Route::get('rankall/{id}','UsersController@rankAll')->name('rankAll');
-    Route::get('groupRank/{id}/{group}','UsersController@groupRank')->name('groupRank');
+
+
+    //Route::post('resetPassword/{id}','UsersController@resetPassword')->name('resetPassword');
+    //Route::get('rankall/{id}','UsersController@rankAll')->name('rankAll');
+    //Route::get('groupRank/{id}/{group}','UsersController@groupRank')->name('groupRank');
+
+    Route::get('activityOfUser/{id}','UsersController@activityOfUser');
+    Route::post('searchPlayer','UsersController@searchPlayer');
+    Route::post('/getAllPlayers','UsersController@getAllPlayers');
+    Route::get('/playerOfUser/{id}','UsersController@playerDetail');
+    Route::post('marking','UsersController@postScore');
+
 
 });
 
 Route::group(['middleware'=>'admin'],function(){
 
-    Route::get('activity/{id}','AdminController@showActivity')->name('showActivity');
-    Route::get('oldActivity/{id}','AdminController@showOldActivity')->name('showOldActivity');
-    Route::get('create/activity','AdminController@getCreateActivity')->name('createActivity');
-    Route::post('create/activity','AdminController@postCreateActivity')->name('createActivity');
-    Route::post('createPlayer','AdminController@createPlayer')->name('createPlayer');
-    Route::post('createUser','AdminController@createUser')->name('createUser');
-    Route::get('update/activity/{id}','AdminController@getUpdateActivity')->name('updateActivity');
-    Route::get('update/user/{id}','AdminController@getUpdateUser')->name('updateUser');
-    Route::get('update/player/{id}','AdminController@getUpdatePlayer')->name('updatePlayer');
-    Route::post('update/activity/{id}','AdminController@updateActivity')->name('updateActivity');
-    Route::post('update/user/{id}','AdminController@updateUser')->name('updateUser');
-    Route::post('update/player/{id}','AdminController@updatePlayer')->name('updatePlayer');
-    Route::delete('delete/{id}','AdminController@destroy')->name('deleteActivity');
-    Route::post('restore/{id}','AdminController@restore')->name('restoreActivity');
-    Route::get('admin','AdminController@admin')->name('admin');
-    Route::get('marked/player/{id}','AdminController@markedPlayer')->name('markedPlayer');
-    Route::get('unMarked/player/{id}','AdminController@unMarkedPlayer')->name('unMarkedPlayer');
-    Route::get('marked/player/detail/{id}','AdminController@markedPlayerDetail')->name('markedPlayerDetail');
-    Route::get('unMarked/player/detail/{id}','AdminController@unMarkedPlayerDetail')->name('unMarkedPlayerDetail');
+    Route::post('create/activity','AdminController@postCreateActivity');
+    Route::get('getActivityList/{listType}','AdminController@getActivityList');
+    Route::get('activity/{id}','AdminController@showActivity');
+    Route::post('update/activity','AdminController@updateActivity');
+    Route::post('finishActivity','AdminController@destroy');
+    Route::post('restoreActivity','AdminController@restore');
+    Route::post('/deleteActivity/{id}','AdminController@deleteActivity');
+    Route::post('/searchActivity','AdminController@searchActivity');
 
+    Route::post('/getUserTable','AdminController@getUserTable');
+    Route::get('user/{id}','AdminController@getUser');
+    Route::post('update/user','AdminController@updateUser');
+
+    Route::post('/getPlayerTable','AdminController@getPlayerTable');
+    Route::get('player/{id}','AdminController@getPlayer');
+    Route::post('update/player','AdminController@updatePlayer');
+    Route::get('player/detail/{id}','AdminController@playerDetail');
 });

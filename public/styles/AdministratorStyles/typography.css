@@ -1,0 +1,562 @@
+
+
+
+/*板式样式表*/
+/*包括行高字体对齐居中等*/
+
+
+
+/*活动卡片上右上角活动类型*/
+.actType{
+	text-align: center;
+	font-weight: bold;
+}
+
+/*活动卡片上的活动名称*/
+.cardActName{
+	font-weight: bold;
+	text-overflow:ellipsis;/*让超出的用...实现*/
+    white-space:nowrap;/*禁止换行*/
+    overflow:hidden;/*超出的隐藏*/
+}
+
+/*跳转到上个活动/下个活动的导航条*/
+#actMsgPartNav{
+	line-height: 0.48rem;
+}
+
+#actMsgPartNav a{
+	text-overflow:ellipsis;/*让超出的用...实现*/
+    white-space:nowrap;/*禁止换行*/
+    overflow:hidden;/*超出的隐藏*/
+}
+
+#actMsgPartNav a.notHadActClickable{
+	text-decoration: none;
+}
+
+
+
+#userNav a{
+	text-decoration: none;
+}
+
+#userNav a[ifClick=on] span:hover{
+	text-decoration: underline;
+}
+
+
+
+#userTable tr td,#userInformation tr td{
+	text-align: center;
+}
+
+.userNameInTable{
+	text-decoration: none;
+}
+
+.userNameInTable:hover{
+	text-decoration: underline;
+}
+
+#userInformation input{
+	text-align: center;
+}
+
+
+
+#rankingNav a{
+	text-decoration: none;
+}
+
+#rankingNav a[ifClick=on] span:hover{
+	text-decoration: underline;
+}
+
+
+
+#rankingListTable tr{
+	text-align: center;
+}
+
+
+
+#playerImg{
+	text-align: center;
+}
+
+
+
+#playerBasicInformation li span{
+	text-align: center;
+}
+
+
+
+/*选手得分详细表单*/
+#playerScoreAndRank{
+	font-weight: bold;
+}
+
+#playerScoreAndRank span{
+	font-weight: normal;
+}
+
+#detailedScoreOfPlayer tr th,#detailedScoreOfPlayer tr td{
+	text-align: center;
+}
+
+
+
+/***********************************************1440 x 900以上**********************************************/
+@media only screen and (min-width:1440px){
+	/*导入选手评委文件区域*/
+	.fileUploadTip{
+		line-height: 0.4rem;
+	}
+
+	.fileUpload{
+		line-height: 0.28rem;
+	}
+
+
+
+	/*活动卡片上右上角活动类型*/
+	.actType{
+		line-height: 0.504rem;
+	}
+
+	/*活动卡片上的活动名称*/
+	.cardActName{
+		font-size: 0.22rem;
+	}
+
+
+
+	/*跳转到上个活动/下个活动的导航条*/
+	#actMsgPartNav{
+		line-height: 0.672rem;
+	}
+
+
+
+	/*评委列表头部导航条*/
+	#userNav{
+		line-height: 0.7rem;
+	}
+
+
+
+	/*评委列表头部导航条*/
+	#rankingNav{
+		line-height: 0.7rem;
+	}
+
+
+
+	/*选手排名列表类型按钮*/
+	.rankingPartShowTypeBtn{
+		font-size: 0.22rem;
+	}
+
+
+
+	#rankingListTable tr{
+		line-height: 0.504rem;
+	}
+
+
+
+	#playerImg{
+		line-height: 1.96rem;
+	}
+
+
+
+	#playerBasicInformation li span{
+		line-height: 0.336rem;
+	}
+
+	#playerName{
+		line-height: 0.336rem;
+	}
+
+
+
+	/*选手得分详细表单*/
+	#playerScoreAndRank{
+		font-size: 0.28rem;
+	}
+
+	#detailedScoreTableHead{
+		line-height: 0.56rem;
+	}
+
+	.userScoreTr{
+		line-height: 0.336rem;
+	}
+}
+
+
+
+/******************************************1366 x 768 ~ 1440 x 900******************************************/
+@media only screen and (min-width:1366px)and (max-width:1440px){
+	/*导入选手评委文件区域*/
+	.fileUploadTip{
+		line-height: 0.31rem;
+	}
+
+	.fileUpload{
+		line-height: 0.21rem;
+	}
+
+
+
+	/*活动卡片上右上角活动类型*/
+	.actType{
+		line-height: 0.378rem;
+	}
+
+	/*活动卡片上的活动名称*/
+	.cardActName{
+		font-size: 0.21rem;
+	}
+
+
+
+	/*跳转到上个活动/下个活动的导航条*/
+	#actMsgPartNav{
+		line-height: 0.504rem;
+	}
+
+
+
+	/*评委列表头部导航条*/
+	#userNav{
+		line-height: 0.525rem;
+	}
+
+
+
+	/*评委列表头部导航条*/
+	#rankingNav{
+		line-height: 0.525rem;
+	}
+
+
+
+	/*选手排名列表类型按钮*/
+	.rankingPartShowTypeBtn{
+		font-size: 0.21rem;
+	}
+
+
+
+	#rankingListTable tr{
+		line-height: 0.378rem;
+	}
+
+
+
+	#playerImg{
+		line-height: 1.47rem;
+	}
+
+
+
+	#playerBasicInformation li span{
+		line-height: 0.252rem;
+	}
+
+	#playerName{
+		line-height: 0.252rem;
+	}
+
+
+
+	/*选手得分详细表单*/
+	#playerScoreAndRank{
+		font-size: 0.26rem;
+	}
+
+	#detailedScoreTableHead{
+		line-height: 0.42rem;
+	}
+
+	.userScoreTr{
+		line-height: 0.252rem;
+	}
+}
+
+
+
+/******************************************1280 x 800 ~ 1366 x 768******************************************/
+@media only screen and (min-width:1280px)and (max-width:1366px){
+	/*导入选手评委文件区域*/
+	.fileUploadTip{
+		line-height: 0.28rem;
+	}
+
+	.fileUpload{
+		line-height: 0.2rem;
+	}
+
+
+
+	/*活动卡片上右上角活动类型*/
+	.actType{
+		line-height: 0.36rem;
+	}
+
+	/*活动卡片上的活动名称*/
+	.cardActName{
+		font-size: 0.2rem;
+	}
+
+
+
+	/*跳转到上个活动/下个活动的导航条*/
+	#actMsgPartNav{
+		line-height: 0.48rem;
+	}
+
+
+
+	/*评委列表头部导航条*/
+	#userNav{
+		line-height: 0.5rem;
+	}
+
+
+
+	/*评委列表头部导航条*/
+	#rankingNav{
+		line-height: 0.5rem;
+	}
+
+
+
+	/*选手排名列表类型按钮*/
+	.rankingPartShowTypeBtn{
+		font-size: 0.2rem;
+	}
+
+
+
+	#rankingListTable tr{
+		line-height: 0.36rem;
+	}
+
+
+
+	#playerImg{
+		line-height: 1.4rem;
+	}
+
+
+
+	#playerBasicInformation li span{
+		line-height: 0.24rem;
+	}
+
+	#playerName{
+		line-height: 0.24rem;
+	}
+
+
+
+	/*选手得分详细表单*/
+	#playerScoreAndRank{
+		font-size: 0.24rem;
+	}
+
+	#detailedScoreTableHead{
+		line-height: 0.4rem;
+	}
+
+	.userScoreTr{
+		line-height: 0.24rem;
+	}
+}
+
+
+
+/******************************************1024 x 768 ~ 1280 x 800******************************************/
+@media only screen and (min-width:1024px)and (max-width:1280px){
+	/*导入选手评委文件区域*/
+	.fileUploadTip{
+		line-height: 0.247rem;
+	}
+
+	.fileUpload{
+		line-height: 0.187rem;
+	}
+
+
+
+	/*活动卡片上右上角活动类型*/
+	.actType{
+		line-height: 0.337rem;
+	}
+
+	/*活动卡片上的活动名称*/
+	.cardActName{
+		font-size: 0.19rem;
+	}
+
+
+
+	/*跳转到上个活动/下个活动的导航条*/
+	#actMsgPartNav{
+		line-height: 0.445rem;
+	}
+
+
+
+	/*评委列表头部导航条*/
+	#userNav{
+		line-height: 0.469rem;
+	}
+
+
+
+	/*评委列表头部导航条*/
+	#rankingNav{
+		line-height: 0.467rem;
+	}
+
+
+
+	/*选手排名列表类型按钮*/
+	.rankingPartShowTypeBtn{
+		font-size: 0.19rem;
+	}
+
+
+
+	#rankingListTable tr{
+		line-height: 0.337rem;
+	}
+
+
+
+	#playerImg{
+		line-height: 1.31rem;
+	}
+
+
+
+	#playerBasicInformation li span{
+		line-height: 0.225rem;
+	}
+
+	#playerName{
+		line-height: 0.225rem;
+	}
+
+
+
+	/*选手得分详细表单*/
+	#playerScoreAndRank{
+		font-size: 0.22rem;
+	}
+
+	#detailedScoreTableHead{
+		line-height: 0.375rem;
+	}
+
+	.userScoreTr{
+		line-height: 0.225rem;
+	}
+}
+
+
+
+/***********************************************1024 x 768以下**********************************************/
+@media only screen and (max-width:1024px){
+	/*导入选手评委文件区域*/
+	.fileUploadTip{
+		line-height: 0.19rem;
+	}
+
+	.fileUpload{
+		line-height: 0.15rem;
+	}
+
+
+
+	/*活动卡片上右上角活动类型*/
+	.actType{
+		line-height: 0.27rem;
+	}
+
+	/*活动卡片上的活动名称*/
+	.cardActName{
+		font-size: 0.18rem;
+	}
+
+
+
+	/*跳转到上个活动/下个活动的导航条*/
+	#actMsgPartNav{
+		line-height: 0.36rem;
+	}
+
+
+
+	/*评委列表头部导航条*/
+	#userNav{
+		line-height: 0.375rem;
+	}
+
+
+
+	/*评委列表头部导航条*/
+	#rankingNav{
+		line-height: 0.375rem;
+	}
+
+
+
+	/*选手排名列表类型按钮*/
+	.rankingPartShowTypeBtn{
+		font-size: 0.18rem;
+	}
+
+
+
+	#rankingListTable tr{
+		line-height: 0.27rem;
+	}
+
+
+
+	#playerImg{
+		line-height: 1.05rem;
+	}
+
+
+
+	#playerBasicInformation li span{
+		line-height: 0.18rem;
+	}
+
+	#playerName{
+		line-height: 0.18rem;
+	}
+
+
+
+	/*选手得分详细表单*/
+	#playerScoreAndRank{
+		font-size: 0.2rem;
+	}
+
+	#detailedScoreTableHead{
+		line-height: 0.3rem;
+	}
+
+	.userScoreTr{
+		line-height: 0.18rem;
+	}
+}

@@ -1,0 +1,397 @@
+
+
+
+/*-------------------------------自定义弹框 alertBox confirmBox 的css样式表-------------------------------*/
+
+/*到时增补到其他css文件的样式-------------------------------------------------------------------------------*/
+/*---------------------------------------------------暂无---------------------------------------------------*/
+/*-------------------------------------------------------------------------------到时增补到其他css文件的样式*/
+
+
+
+#mask{
+	float: left;
+	position:fixed;
+	margin-bottom: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 10000;
+	display: none;
+	background: rgba(192,192,192,0.25);
+}
+
+#alertBox{
+	float: left;
+	background-color: #ffffff;
+	border-radius: 0.1rem;
+	box-shadow: 0 0.03rem 0.08rem;
+	-moz-box-shadow: 0 0.03rem 0.08rem;
+	-webkit-box-shadow: 0 0.03rem 0.08rem;
+}
+
+.originBorder{
+	border:1px solid #cccccc;
+}
+
+.flashBorder{
+	border:1px solid #ff0000;
+}
+
+#alertBox li{
+	width: 100%;
+}
+
+#alertBoxHeader{
+	float: left;
+	background-color: #a5def1;
+}
+
+#alertBoxBody{
+	float: left;
+	text-align: center;
+}
+
+#alertBoxFooter{
+	float: left;
+	background-color: #f1f1f1;
+}
+
+#alertBoxClose{
+	float: right;
+}
+
+#alertBoxClose:hover{
+	cursor: pointer;
+	background-color: red;
+}
+
+#alertBoxClose span{
+	float: left;
+	background-image: url("../images/close.png");
+	background-size: 100% auto;
+}
+
+.alertBoxBtn{
+	border-radius: 0.05rem;
+	box-shadow: 0 0.01rem 0.03rem;
+	-moz-box-shadow: 0 0.01rem 0.03rem;
+	-webkit-box-shadow: 0 0.01rem 0.03rem;
+}
+
+.alertBoxBtn:hover{
+	cursor: pointer;
+	background-color: #A8A8A8;
+	color: #ffffff;
+}
+
+#alertBoxSure{
+	float: left;
+}
+
+.alertSure{
+	
+}
+
+.confirmSure{
+	
+}
+
+#alertBoxCancel{
+	float: right;
+	display: none;
+}
+
+
+
+/***********************************************1440 x 900以上**********************************************/
+@media only screen and (min-width:1440px){
+	#alertBox{
+		height: 2.8rem;
+		width: 4.76rem;
+	}
+
+	#alertBoxHeader{
+		margin-bottom: 0.66rem;
+		height: 0.588rem;
+		border-top-left-radius: 0.15rem;
+		border-top-right-radius: 0.15rem;
+	}
+
+	#alertBoxBody{
+		height: 0.8rem;
+		line-height: 0.4rem;
+		font-size: 0.2rem;
+	}
+
+	#alertBoxFooter{
+		padding-top: 0.144rem;
+		height: 0.608rem;
+		border-bottom-left-radius: 0.15rem;
+		border-bottom-right-radius: 0.15rem;
+	}
+
+	#alertBoxClose{
+		height: 0.588rem;
+		width: 0.588rem;
+		border-top-right-radius: 0.15rem;
+	}
+
+	#alertBoxClose span{
+		height: 0.588rem;
+		width: 0.588rem;
+	}
+
+	.alertBoxBtn{
+		height: 0.392rem;
+		width: 0.784rem;
+		font-size: 0.2rem;
+	}
+
+	.alertSure{
+		margin-left: 1.96rem;
+	}
+
+	.confirmSure{
+		margin-left: 1.19rem;
+	}
+
+	#alertBoxCancel{
+		margin-right: 1.19rem;
+	}
+}
+
+
+
+/******************************************1366 x 768 ~ 1440 x 900******************************************/
+@media only screen and (min-width:1366px)and (max-width:1440px){
+	#alertBox{
+		height: 2.1rem;
+		width: 3.57rem;
+	}
+
+	#alertBoxHeader{
+		margin-bottom: 0.4rem;
+		height: 0.441rem;
+		border-top-left-radius: 0.12rem;
+		border-top-right-radius: 0.12rem;
+	}
+
+	#alertBoxBody{
+		height: 0.76rem;
+		line-height: 0.38rem;
+		font-size: 0.19rem;
+	}
+
+	#alertBoxFooter{
+		padding-top: 0.105rem;
+		height: 0.376rem;
+		border-bottom-left-radius: 0.12rem;
+		border-bottom-right-radius: 0.12rem;
+	}
+
+	#alertBoxClose{
+		height: 0.441rem;
+		width: 0.441rem;
+		border-top-right-radius: 0.12rem;
+	}
+
+	#alertBoxClose span{
+		height: 0.441rem;
+		width: 0.441rem;
+	}
+
+	.alertBoxBtn{
+		height: 0.294rem;
+		width: 0.588rem;
+		font-size: 0.18rem;
+	}
+
+	.alertSure{
+		margin-left: 1.47rem;
+	}
+
+	.confirmSure{
+		margin-left: 0.893rem;
+	}
+
+	#alertBoxCancel{
+		margin-right: 0.893rem;
+	}
+}
+
+
+
+/******************************************1280 x 800 ~ 1366 x 768******************************************/
+@media only screen and (min-width:1280px)and (max-width:1366px){
+	#alertBox{
+		height: 2rem;
+		width: 3.4rem;
+	}
+
+	#alertBoxHeader{
+		margin-bottom: 0.4rem;
+		height: 0.42rem;
+		border-top-left-radius: 0.1rem;
+		border-top-right-radius: 0.1rem;
+	}
+
+	#alertBoxBody{
+		height: 0.72rem;
+		line-height: 0.36rem;
+		font-size: 0.18rem;
+	}
+
+	#alertBoxFooter{
+		padding-top: 0.1rem;
+		height: 0.36rem;
+		border-bottom-left-radius: 0.1rem;
+		border-bottom-right-radius: 0.1rem;
+	}
+
+	#alertBoxClose{
+		height: 0.42rem;
+		width: 0.42rem;
+		border-top-right-radius: 0.1rem;
+	}
+
+	#alertBoxClose span{
+		height: 0.42rem;
+		width: 0.42rem;
+	}
+
+	.alertBoxBtn{
+		height: 0.28rem;
+		width: 0.56rem;
+		font-size: 0.16rem;
+	}
+
+	.alertSure{
+		margin-left: 1.4rem;
+	}
+
+	.confirmSure{
+		margin-left: 0.85rem;
+	}
+
+	#alertBoxCancel{
+		margin-right: 0.85rem;
+	}
+}
+
+
+
+/******************************************1024 x 768 ~ 1280 x 800******************************************/
+@media only screen and (min-width:1024px)and (max-width:1280px){
+	#alertBox{
+		height: 1.874rem;
+		width: 3.186rem;
+	}
+
+	#alertBoxHeader{
+		margin-bottom: 0.375rem;
+		height: 0.394rem;
+		border-top-left-radius: 0.07rem;
+		border-top-right-radius: 0.07rem;
+	}
+
+	#alertBoxBody{
+		height: 0.68rem;
+		line-height: 0.34rem;
+		font-size: 0.17rem;
+	}
+
+	#alertBoxFooter{
+		padding-top: 0.09rem;
+		height: 0.335rem;
+		border-bottom-left-radius: 0.07rem;
+		border-bottom-right-radius: 0.07rem;
+	}
+
+	#alertBoxClose{
+		height: 0.394rem;
+		width: 0.394rem;
+		border-top-right-radius: 0.07rem;
+	}
+
+	#alertBoxClose span{
+		height: 0.394rem;
+		width: 0.394rem;
+	}
+
+	.alertBoxBtn{
+		height: 0.262rem;
+		width: 0.524rem;
+		font-size: 0.14rem;
+	}
+
+	.alertSure{
+		margin-left: 1.312rem;
+	}
+
+	.confirmSure{
+		margin-left: 0.796rem;
+	}
+
+	#alertBoxCancel{
+		margin-right: 0.796rem;
+	}
+}
+
+
+
+/***********************************************1024 x 768以下**********************************************/
+@media only screen and (max-width:1024px){
+	#alertBox{
+		height: 1.5rem;
+		width: 2.55rem;
+	}
+
+	#alertBoxHeader{
+		margin-bottom: 0.2rem;
+		height: 0.315rem;
+		border-top-left-radius: 0.05rem;
+		border-top-right-radius: 0.05rem;
+	}
+
+	#alertBoxBody{
+		height: 0.64rem;
+		line-height: 0.32rem;
+		font-size: 0.16rem;
+	}
+
+	#alertBoxFooter{
+		padding-top: 0.075rem;
+		height: 0.27rem;
+		border-bottom-left-radius: 0.05rem;
+		border-bottom-right-radius: 0.05rem;
+	}
+
+	#alertBoxClose{
+		height: 0.315rem;
+		width: 0.315rem;
+		border-top-right-radius: 0.05rem;
+	}
+
+	#alertBoxClose span{
+		height: 0.315rem;
+		width: 0.315rem;
+	}
+
+	.alertBoxBtn{
+		height: 0.21rem;
+		width: 0.42rem;
+		font-size: 0.12rem;
+	}
+
+	.alertSure{
+		margin-left: 1.05rem;
+	}
+
+	.confirmSure{
+		margin-left: 0.638rem;
+	}
+
+	#alertBoxCancel{
+		margin-right: 0.638rem;
+	}
+}

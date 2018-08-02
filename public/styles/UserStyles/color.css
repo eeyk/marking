@@ -1,0 +1,83 @@
+
+
+
+/*颜色样式表*/
+/*包括前景色、背景色、透明度*/
+
+
+
+/*活动处于不同状态下的两种字体颜色*/
+#actType span.onGoing{
+	background-color: transparent;
+	color: #00FF00;
+}
+
+#actType span.finish{
+	background-color: transparent;
+	color: #FF0000;
+}
+
+
+
+#rankingNav a{
+	background-color: transparent;
+	color: #333333;
+}
+
+#rankingNav a[ifClick=on] span:hover{
+	background-color: transparent;
+	color: #FF0000;
+}
+
+
+
+.rankingPartShowTypeBtn[clicked="off"]{
+	opacity: 0.5;
+}
+
+.rankingPartShowTypeBtn[clicked="off"]:hover{
+	opacity: 1;
+}
+
+
+
+#playerTableHead{
+	background-color: grey;
+}
+
+.playerTr:hover{
+	background-color: lightgrey;
+}
+
+.markedPlayer .markTd{
+	background-color: transparent;
+	color: #32CD32;
+}
+
+.unmarkedPlayer .markTd{
+	background-color: transparent;
+	color: #FF0000;
+}
+
+
+
+#scoringPageNav a{
+	background-color: transparent;
+	color: #333333;
+}
+
+#scoringPageNav a.hadPlayerClickable:hover{
+	background-color: transparent;
+	color: #FF0000;
+}
+
+
+
+/*提交评分按钮*/
+#scoreBtn{
+	background-color: #a5def1;
+}
+
+#scoreBtn:hover{
+	opacity: 0.75;
+}

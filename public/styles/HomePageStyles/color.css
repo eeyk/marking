@@ -1,0 +1,77 @@
+
+
+
+/*颜色样式表*/
+/*包括前景色、背景色、透明度*/
+
+
+
+#contain{
+	background-color: #ebf7fd;
+}
+
+
+
+/*页面头部-------------------------------------------------------------------------------------------------*/
+#pageHeader{
+	background-color: #a5def1;
+}
+
+/*页面头部部件*/
+#cancellation:hover{
+	background-color: transparent;
+	color: #FF0000;
+}
+
+/*页面头部搜索框部分*/
+#searchBox{
+	background-color: #ffffff;
+}
+/*-------------------------------------------------------------------------------------------------页面头部*/
+
+
+
+/*左侧菜单栏-----------------------------------------------------------------------------------------------*/
+#menu{
+	background-color: #21294c;
+}
+
+#menu li.unchecked{
+	background-color: transparent;
+	color: #ffffff;
+}
+
+#menu li.checked{
+	background-color: #ebf7fd;
+	color: #333333;
+}
+/*-----------------------------------------------------------------------------------------------左侧菜单栏*/
+
+
+
+/*右侧核心区域---------------------------------------------------------------------------------------------*/
+/*活动图片区域*/
+.actImg{
+	background-color: #a5def1;
+}
+
+.modifiable:hover{
+	opacity: 0.75;
+}
+
+.actName,.actDetails{
+	background-color: #ffffff;
+}
+
+
+
+/*活动操作按钮*/
+.actOperationBtn{
+	background-color: #a5def1;
+	color: #000000;
+}
+
+.actOperationBtn:hover{
+	opacity: 0.75;
+}
+/*---------------------------------------------------------------------------------------------右侧核心区域*/

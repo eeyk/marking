@@ -1,0 +1,286 @@
+
+
+
+/*布局样式表*/
+/*包括浮动、定位、内外边距、宽高、边框、阴影、背景图片等*/
+
+
+
+/*登录框*/
+#centerBox{
+	display: block;
+}
+
+
+
+/*登录框头部*/
+#centerBox header{
+	float: left;
+	height: 25%;
+	width: 100%;
+}
+
+/*登录框头部放置logo的元素*/
+#imgArea{
+	float: left;
+	margin: 12.5% 12.5%;
+	height: 35%;
+	width: 75%;  /*经测试保持这个宽高比可使图片正常显示*/
+	background-image: url("../../images/loginBoxTitle.png");
+	background-size:100% auto;
+}
+
+#loginForm{
+	float: left;
+	height: 75%;
+	width: 100%;
+}
+
+#account,#password{
+	float: left;
+	margin: 10% 20% 0;
+	padding: 1% 2%;
+	height: 8%;
+	width: 56%;
+	border:1px solid #cccccc;
+}
+
+/*身份单选框*/
+#identity{
+	float: left;
+	margin-top: 8%;
+	height: 8%;
+	width: 100%;
+}
+
+#identity input:nth-child(2){
+	margin-left: 16%;
+}
+
+#loginBtn{
+	float: left;
+	margin: 0 12.5%;
+	margin-top: 10%;
+	height: 14.4%;
+	width: 75%;
+}
+
+
+
+/***********************************************1440 x 900以上**********************************************/
+@media only screen and (min-width:1440px){
+	/*登录框*/
+	#centerBox{
+		height: 5.6rem;
+		width: 4.2rem;
+		border:5px solid #ffffff;
+		border-radius: 0.2rem;
+		box-shadow: 0 0.03rem 0.06rem;
+		-moz-box-shadow: 0 0.03rem 0.06rem;
+		-webkit-box-shadow: 0 0.03rem 0.06rem;
+	}
+	
+	/*登录框头部*/
+	#centerBox header{
+		border-top-left-radius: 0.2rem;
+		border-top-right-radius: 0.2rem;
+	}
+
+	#account,#password{
+		border-radius: 0.07rem;
+	}
+	
+	/*身份单选框*/
+	#identity{
+		font-size: 0.18rem;
+	}
+
+	#loginBtn{
+		border-radius: 0.15rem;
+		box-shadow: 0 0.03rem 0.1rem;
+		-moz-box-shadow: 0 0.03rem 0.1rem;
+		-webkit-box-shadow: 0 0.03rem 0.1rem;
+	}
+
+	#loginBtn:hover{
+		box-shadow: 0 0.03rem 0.12rem;
+		-moz-box-shadow: 0 0.03rem 0.12rem;
+		-webkit-box-shadow: 0 0.03rem 0.12rem;
+	}
+}
+
+
+
+/******************************************1366 x 768 ~ 1440 x 900******************************************/
+@media only screen and (min-width:1366px)and (max-width:1440px){
+	/*登录框*/
+	#centerBox{
+		height: 4.2rem;
+		width: 3.15rem;
+		border:4px solid #ffffff;
+		border-radius: 0.17rem;
+		box-shadow: 0 0.02rem 0.04rem;
+		-moz-box-shadow: 0 0.02rem 0.04rem;
+		-webkit-box-shadow: 0 0.02rem 0.04rem;
+	}
+	
+	/*登录框头部*/
+	#centerBox header{
+		border-top-left-radius: 0.17rem;
+		border-top-right-radius: 0.17rem;
+	}
+
+	#account,#password{
+		border-radius: 0.06rem;
+	}
+
+	/*身份单选框*/
+	#identity{
+		font-size: 0.17rem;
+	}
+
+	#loginBtn{
+		border-radius: 0.12rem;
+		box-shadow: 0 0.02rem 0.08rem;
+		-moz-box-shadow: 0 0.02rem 0.08rem;
+		-webkit-box-shadow: 0 0.02rem 0.08rem;
+	}
+
+	#loginBtn:hover{
+		box-shadow: 0 0.02rem 0.1rem;
+		-moz-box-shadow: 0 0.02rem 0.1rem;
+		-webkit-box-shadow: 0 0.02rem 0.1rem;
+	}
+}
+
+
+
+/******************************************1280 x 800 ~ 1366 x 768******************************************/
+@media only screen and (min-width:1280px)and (max-width:1366px){
+	/*登录框*/
+	#centerBox{
+		height: 4rem;
+		width: 3rem;
+		border:3px solid #ffffff;
+		border-radius: 0.15rem;
+		box-shadow: 0 0.02rem 0.04rem;
+		-moz-box-shadow: 0 0.02rem 0.04rem;
+		-webkit-box-shadow: 0 0.02rem 0.04rem;
+	}
+	
+	/*登录框头部*/
+	#centerBox header{
+		border-top-left-radius: 0.15rem;
+		border-top-right-radius: 0.15rem;
+	}
+
+	#account,#password{
+		border-radius: 0.05rem;
+	}
+
+	/*身份单选框*/
+	#identity{
+		font-size: 0.16rem;
+	}
+
+	#loginBtn{
+		border-radius: 0.1rem;
+		box-shadow: 0 0.02rem 0.06rem;
+		-moz-box-shadow: 0 0.02rem 0.06rem;
+		-webkit-box-shadow: 0 0.02rem 0.06rem;
+	}
+
+	#loginBtn:hover{
+		box-shadow: 0 0.02rem 0.08rem;
+		-moz-box-shadow: 0 0.02rem 0.08rem;
+		-webkit-box-shadow: 0 0.02rem 0.08rem;
+	}
+}
+
+
+
+/******************************************1024 x 768 ~ 1280 x 800******************************************/
+@media only screen and (min-width:1024px)and (max-width:1280px){
+	/*登录框*/
+	#centerBox{
+		height: 3.748rem;
+		width: 2.811rem;
+		border:2px solid #ffffff;
+		border-radius: 0.12rem;
+		box-shadow: 0 0.02rem 0.04rem;
+		-moz-box-shadow: 0 0.02rem 0.04rem;
+		-webkit-box-shadow: 0 0.02rem 0.04rem;
+	}
+	
+	/*登录框头部*/
+	#centerBox header{
+		border-top-left-radius: 0.12rem;
+		border-top-right-radius: 0.12rem;
+	}
+
+	#account,#password{
+		border-radius: 0.04rem;
+	}
+
+	/*身份单选框*/
+	#identity{
+		font-size: 0.15rem;
+	}
+
+	#loginBtn{
+		border-radius: 0.07rem;
+		box-shadow: 0 0.02rem 0.04rem;
+		-moz-box-shadow: 0 0.02rem 0.04rem;
+		-webkit-box-shadow: 0 0.02rem 0.04rem;
+	}
+
+	#loginBtn:hover{
+		box-shadow: 0 0.02rem 0.06rem;
+		-moz-box-shadow: 0 0.02rem 0.06rem;
+		-webkit-box-shadow: 0 0.02rem 0.06rem;
+	}
+}
+
+
+
+/***********************************************1024 x 768以下**********************************************/
+@media only screen and (max-width:1024px){
+	/*登录框*/
+	#centerBox{
+		height: 3rem;
+		width: 2.25rem;
+		border:1px solid #ffffff;
+		border-radius: 0.1rem;
+		box-shadow: 0 0.01rem 0.02rem;
+		-moz-box-shadow: 0 0.01rem 0.02rem;
+		-webkit-box-shadow: 0 0.01rem 0.02rem;
+	}
+	
+	/*登录框头部*/
+	#centerBox header{
+		border-top-left-radius: 0.1rem;
+		border-top-right-radius: 0.1rem;
+	}
+
+	#account,#password{
+		border-radius: 0.03rem;
+	}
+
+	/*身份单选框*/
+	#identity{
+		font-size: 0.14rem;
+	}
+
+	#loginBtn{
+		border-radius: 0.05rem;
+		box-shadow: 0 0.01rem 0.02rem;
+		-moz-box-shadow: 0 0.01rem 0.02rem;
+		-webkit-box-shadow: 0 0.01rem 0.02rem;
+	}
+
+	#loginBtn:hover{
+		box-shadow: 0 0.01rem 0.04rem;
+		-moz-box-shadow: 0 0.01rem 0.04rem;
+		-webkit-box-shadow: 0 0.01rem 0.04rem;
+	}
+}

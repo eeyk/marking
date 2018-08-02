@@ -1,0 +1,7 @@
+
+
+
+@import url("../mainStyle.css");  /*导入整体控制样式表*/
+@import url("layout.css");  /*导入布局样式表*/
+@import url("color.css");  /*导入颜色样式表*/
+@import url("typography.css");  /*导入板式样式表*/

@@ -1,0 +1,85 @@
+
+
+
+/*整体控制样式表*/
+@import url("layout.css");  /*导入布局样式表*/
+@import url("color.css");  /*导入颜色样式表*/
+@import url("typography.css");  /*导入板式样式表*/
+
+
+/*这里写响应式时考虑的是用户使用的几个主流的分辨率：1、1440 x 900以上; 2、1366 x 768 ~ 1440 x 900;
+3、1280 x 800 ~ 1366 x 768; 4、1024 x 768 ~ 1280 x 800; 5、1024 x 768以下;
+
+写css时以除了字体、边框、图片以外，几乎所有的元素都是将宽度设为父元素百分比，
+然后以 1280 x 800 ~ 1366 x 768 分辨率下的高度为基准，不同分辨率乘以不同的系数得出该分辨率下的高度（个别细微处略有调整）
+依据以上列出的分辨率所得的系数：1、1.4    2、1.05    3、1    4、0.937    5、0.75
+
+
+
+/*为HTML5块元素定义默认的样式，主要针对不支持它们的浏览器*/
+section,header,article,nav{
+	display: block;
+}
+
+*{
+	margin: 0;
+	padding: 0;
+	list-style:none;
+}
+
+/*100px;用rem作为单位*/
+html{
+	font-size:625%;
+}
+
+body{
+	/*页面字体Microsoft YaHei UI Light*/
+	font-family: Microsoft YaHei UI Light;
+}
+
+input,label,select,option,textarea,button,fieldset,legend{
+	/*页面字体Microsoft YaHei UI Light*/
+	font-family: Microsoft YaHei UI Light;
+}
+
+/*除去input框默认样式*/
+input,textarea{  
+   	background:none;
+   	outline:none;
+   	border:0;
+   	resize : none;
+}
+
+input[type = "button"]:hover{
+	cursor: pointer;
+}
+
+#contain{
+	position: absolute;
+	width: 100%;
+}
+
+
+
+/***********************************************1440 x 900以上**********************************************/
+@media only screen and (min-width:1440px){}
+
+
+
+/******************************************1366 x 768 ~ 1440 x 900******************************************/
+@media only screen and (min-width:1366px)and (max-width:1440px){}
+
+
+
+/******************************************1280 x 800 ~ 1366 x 768******************************************/
+@media only screen and (min-width:1280px)and (max-width:1366px){}
+
+
+
+/******************************************1024 x 768 ~ 1280 x 800******************************************/
+@media only screen and (min-width:1024px)and (max-width:1280px){}
+
+
+
+/***********************************************1024 x 768以下**********************************************/
+@media only screen and (max-width:1024px){}

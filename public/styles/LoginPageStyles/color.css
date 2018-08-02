@@ -1,0 +1,36 @@
+
+
+
+/*颜色样式表*/
+/*包括前景色、背景色、透明度*/
+
+
+
+body{
+	background: rgba(165,222,241,0.3);  /*这种写法不会让子元素继承父元素的透明度*/
+	box-shadow-color: #888888;
+}
+
+/*登录框*/
+#centerBox{
+	background-color: transparent;
+}
+
+/*登录框头部*/
+#centerBox header{
+	background-color: #a5def1;
+}
+
+#account,#password{
+	background-color: #ffffff;
+}
+
+#loginBtn{
+	background-color: #DCDCDC;
+	box-shadow-color: #888888;
+	color: #333333;
+}
+
+#loginBtn:hover{
+	opacity: 0.7;
+}

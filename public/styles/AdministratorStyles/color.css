@@ -1,0 +1,188 @@
+
+
+
+/*颜色样式表*/
+/*包括前景色、背景色、透明度*/
+
+
+
+#corePart{
+	background-color: transparent;
+	color: #000000;
+}
+
+
+
+/*导入选手评委文件区域*/
+.fileUpload{
+	background-color: #a5def1;
+	color: #000000;
+}
+
+.fileUpload:hover{
+	opacity: 0.75;
+}
+
+
+
+/*活动卡片*/
+.actCard{
+	background-color: #ffffff;
+}
+
+/*活动卡片上右上角活动类型*/
+.actType{
+	background-color: #ffffff;
+}
+
+/*活动类型为“正举办活动”时的字体*/
+.onGoingType{
+	color: #333333;
+}
+
+/*活动类型为“已结束活动”时的字体*/
+.finishType{
+	color: #999999;
+}
+
+/*活动卡片上的操作按钮*/
+.cardBtn{
+	background-color: #a5def1;
+}
+
+.cardBtn:hover{
+	opacity: 0.75;
+}
+
+#actMsgPartNav a{
+	background-color: transparent;
+	color: #333333;
+}
+
+#actMsgPartNav a.hadActClickable:hover{
+	background-color: transparent;
+	color: #FF0000;
+}
+
+/*查看评委选手排名等按钮*/
+.actInformationFunBtnUl li input:hover{
+	background-color: yellow;
+}
+
+
+
+#userNav a{
+	background-color: transparent;
+	color: #333333;
+}
+
+#userNav a[ifClick=on] span:hover{
+	background-color: transparent;
+	color: #FF0000;
+}
+
+
+
+#userTable tr th,#userInformation tr th{
+	background-color: grey;
+	color: #ffffff;
+}
+
+#userTable tr td,#userInformation tr td{
+	background-color: lightgrey;
+}
+
+.userNameInTable{
+	background-color: transparent;
+	color: #333333;
+}
+
+.userNameInTable:hover{
+	background-color: transparent;
+	color: #FF0000;
+}
+
+
+
+/*修改评委信息、恢复默认按钮组*/
+.userMsgOperationBtn{
+	background-color: #a5def1;
+}
+
+.userMsgOperationBtn:hover{
+	opacity: 0.75;
+}
+
+
+
+#rankingNav a{
+	background-color: transparent;
+	color: #333333;
+}
+
+#rankingNav a[ifClick=on] span:hover{
+	background-color: transparent;
+	color: #FF0000;
+}
+
+
+
+.rankingPartShowTypeBtn[clicked="off"]{
+	opacity: 0.5;
+}
+
+.rankingPartShowTypeBtn[clicked="off"]:hover{
+	opacity: 1;
+}
+
+
+
+#playerTableHead{
+	background-color: grey;
+}
+
+.playerTr:hover{
+	background-color: lightgrey;
+}
+
+.markedPlayer .markTd{
+	background-color: transparent;
+	color: #32CD32;
+}
+
+.unmarkedPlayer .markTd{
+	background-color: transparent;
+	color: #FF0000;
+}
+
+
+
+.playerMsgOperationBtn{
+	background-color: #a5def1;
+}
+
+.playerMsgOperationBtn:hover{
+	opacity: 0.75;
+}
+
+
+
+#playerScoreAndRank span{
+	color: #FF0000;
+}
+
+#detailedScoreOfPlayer{
+	background-color: #FFFFFF;
+}
+
+#detailedScoreTableHead{
+	background-color: grey;
+}
+
+.userScoreTr{
+	background-color: lightgrey;
+}
+
+.no-score{
+	color: #FF0000;
+}

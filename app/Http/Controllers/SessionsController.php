@@ -11,19 +11,29 @@ use App\Models\User;
 class SessionsController extends Controller
 {
 
+
     public function index()
     {
         if (!Auth::check()) {
-            return redirect()->guest('login');
+            return view('LoginPage');
         }elseif (!(Auth::user()->isAdmin)) {
-            return redirect('getAllPlayers');
+            return view('UserPage');
         }
-        return redirect('admin');
+        return view('AdministratorPage');
+    }
+
+    public function identity()
+    {
+        $name = Auth::user()->name;
+        $id = Auth::user()->id;
+        $actId = Auth::user()->activity_id;
+        return response()->json(array('name'=>$name,'id'=>$id,'actId'=>$actId));
+
     }
 
     public function create()
     {
-        return view('login');
+        return view('LoginPage');
     }
 
     public function store(Request $request)
@@ -40,15 +50,15 @@ class SessionsController extends Controller
 
         if (Auth::attempt($credentials,$request->has('remember')))
         {
-          return response()->json(array('status'=>true,'url'=>route('index')));
+          return response()->json(array('result'=>'success','url'=>route('index')));
         }else {
-            return response()->json(array('status'=>false,'url'=>route('login')));
+            return response()->json(array('result'=>'pswError','url'=>route('login')));
         }
     }
 
     public function destroy()
     {
         Auth::logout();
-        return response()->json(array('status'=>true,'url'=>route('login')));
+        return redirect('login');
     }
 }

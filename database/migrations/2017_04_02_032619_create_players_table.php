@@ -13,16 +13,15 @@ class CreatePlayersTable extends Migration
     public function up()
     {
         Schema::create('players', function (Blueprint $table) {
-            $table->string('activity_id');
             $table->increments('id');
+            $table->string('activity_id');
             $table->string('name');
             $table->string('details');
-            $table->float('score');
+            $table->double('score');
+            $table->string('url');
             $table->timestamps();
             $table->softDeletes();
-            $table->float('isMarking')->default(0);
             $table->integer('group');
-            $table->string('img');
             $table->string('groupName');
         });
     }

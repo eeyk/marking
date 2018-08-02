@@ -1,0 +1,627 @@
+
+
+
+/*布局样式表*/
+/*包括浮动、定位、内外边距、宽高、边框、阴影、背景图片等*/
+
+
+
+/*页面头部-------------------------------------------------------------------------------------------------*/
+#pageHeader{
+	float: left;
+	height: 0.8rem;
+	width: 100%;
+}
+
+/*页面头部部件*/
+.pageHeaderPart{
+	margin-top: 0.32rem;
+}
+
+#helloName{
+	float: left;
+	margin-right: 0.4rem;
+	padding-left: 4%;
+}
+
+#cancellation{
+	float: left;
+}
+
+#cancellation:hover{
+	cursor: pointer;
+}
+
+/*页面头部搜索框部分*/
+#searchBox{
+	float: right;
+	margin-right: 5%;
+	width: 12%;
+	border:1px solid #000000;
+}
+
+#searchInput{
+	float: left;
+	margin-left: 4%;
+	height: 92%;
+	width: 80%;
+}
+
+#searchImg{
+	float: left;
+	margin-left: 2%;
+	height: 80%;
+	background-image: url("../../images/search.png");
+	background-size: 100% auto;
+	background-repeat: no-repeat;
+}
+
+#searchImg:hover{
+	cursor: pointer;
+}
+/*-------------------------------------------------------------------------------------------------页面头部*/
+
+
+
+/*左侧菜单栏-----------------------------------------------------------------------------------------------*/
+#menu{
+	float: left;
+	width: 16%;
+}
+
+#menu li{
+	float: left;
+	width: 100%;
+	border-bottom: 1px solid #ffffff;
+}
+
+#menu li.unchecked.hoverable:hover{
+	cursor: pointer;
+	opacity: 0.25;
+}
+
+#menu li.non-hoverable:hover{
+	cursor: not-allowed;
+}
+
+#menu li span{
+	float: left;
+	width: 10%;
+	background-size: 100% auto;
+	background-repeat: no-repeat;
+}
+
+/*左侧菜单栏选中和未选中时小图标的样式*/
+#createActivityLi.checked span{
+	background-image: url("../../images/createBlack.png");
+}
+#createActivityLi.unchecked span{
+	background-image: url("../../images/createWhite.png");
+}
+
+#onGoingActivityLi.checked span{
+	background-image: url("../../images/waitBlack.png");
+}
+#onGoingActivityLi.unchecked span{
+	background-image: url("../../images/waitWhite.png");
+}
+
+#finishActivityLi.checked span{
+	background-image: url("../../images/finishBlack.png");
+}
+#finishActivityLi.unchecked span{
+	background-image: url("../../images/finishWhite.png");
+}
+
+#actInformationForAdminLi.checked span,#actInformationForUserLi.checked span{
+	background-image: url("../../images/actInformationBlack.png");
+}
+#actInformationForAdminLi.unchecked span,#actInformationForUserLi.unchecked span{
+	background-image: url("../../images/actInformationWhite.png");
+}
+
+#scoringAreaLi.checked span{
+	background-image: url("../../images/scoringBlack.png");
+}
+#scoringAreaLi.unchecked span{
+	background-image: url("../../images/scoringWhite.png");
+}
+
+#playerInformationForUserLi.checked span{
+	background-image: url("../../images/waitBlack.png");
+}
+#playerInformationForUserLi.unchecked span{
+	background-image: url("../../images/waitWhite.png");
+}
+/*-----------------------------------------------------------------------------------------------左侧菜单栏*/
+
+
+
+/*右侧核心区域---------------------------------------------------------------------------------------------*/
+#corePart{
+	float: left;
+	margin-left: 4%;
+	width: 76%;
+}
+
+
+
+/*活动图片区域*/
+.actImg{
+	float: left;
+	box-shadow: 0 0.02rem 0.12rem;
+	-moz-box-shadow: 0 0.02rem 0.12rem;
+	-webkit-box-shadow: 0 0.02rem 0.12rem;
+}
+
+.modifiable:hover{
+	cursor: pointer;
+	box-shadow: 0 0.02rem 0.06rem;
+	-moz-box-shadow: 0 0.02rem 0.06rem;
+	-webkit-box-shadow: 0 0.02rem 0.06rem;
+}
+
+/*file类型文件框绝对定位到看不到的地方*/
+.actImgInput{
+	position: absolute;
+	margin-top: -20rem;
+	margin-left: -20rem
+}
+
+
+
+/*活动名称简介*/
+.actBriefMsg{
+	float: left;
+	width: 44%;
+}
+
+.actBriefMsg li{
+	width: 100%;
+}
+
+.actBriefMsg li label{
+	float: left;
+	width: 20%;
+}
+
+.actName,.actDetails{
+	float: left;
+	padding: 0.01rem 1% 0.01rem 1%;
+	width: 72%;
+	border:1px solid #cccccc;
+}
+
+
+
+/*活动操作按钮*/
+.actOperationBtn{
+	border-radius: 0.15rem;
+	box-shadow: 0 0.05rem 0.08rem;
+	-moz-box-shadow: 0 0.05rem 0.08rem;
+	-webkit-box-shadow: 0 0.05rem 0.08rem;
+}
+
+.actOperationBtn:hover{
+	cursor: pointer;
+	box-shadow: 0 0.05rem 0.04rem;
+	-moz-box-shadow: 0 0.05rem 0.04rem;
+	-webkit-box-shadow: 0 0.05rem 0.04rem;
+}
+/*---------------------------------------------------------------------------------------------右侧核心区域*/
+
+
+
+/*---------------------------------------------以上已设置响应式--------------------------------------------*/
+
+
+
+/***********************************************1440 x 900以上**********************************************/
+@media only screen and (min-width:1440px){
+	/*页面头部---------------------------------------------------------------------------------------------*/
+	/*页面头部搜索框部分*/
+	#searchBox{
+		height: 0.28rem;
+		border-radius: 0.15rem;
+	}
+
+	#searchImg{
+		margin-top: 0.02rem;
+		width: 0.22rem;
+	}
+	/*---------------------------------------------------------------------------------------------页面头部*/
+
+
+
+	/*左侧菜单栏-------------------------------------------------------------------------------------------*/
+	#menu li{
+		height: 0.84rem;
+	}
+
+	#menu li span{
+		margin: 0.28rem 6% 0.16rem 18%;
+		height: 0.4rem;
+	}
+	/*-------------------------------------------------------------------------------------------左侧菜单栏*/
+
+
+
+	/*右侧核心区域-----------------------------------------------------------------------------------------*/
+	#corePart{
+		margin-top: 0.42rem;
+	}
+
+
+
+	/*活动图片区域*/
+	.actImg{
+		height: 3.36rem;
+		width: 4.48rem;
+		border-radius: 0.2rem;
+	}
+
+
+
+	/*活动名称简介*/
+	.actBriefMsg{
+		margin-top: 0.672rem;
+		margin-left: 0.84rem;
+	}
+
+	.actBriefMsg li{
+		margin-bottom: 0.14rem;
+		height: 0.336rem;
+	}
+
+	.actBriefMsg li label{
+		height: 0.28rem;
+	}
+
+	.actName{
+		height: 0.336rem;
+	}
+
+	.actDetails{
+		height: 1.68rem;
+	}
+
+
+
+	/*活动操作按钮*/
+	.actOperationBtn{
+		height: 0.616rem;
+		width: 2.24rem;
+	}
+	/*-----------------------------------------------------------------------------------------右侧核心区域*/
+}
+
+
+
+/******************************************1366 x 768 ~ 1440 x 900******************************************/
+@media only screen and (min-width:1366px)and (max-width:1440px){
+	/*页面头部---------------------------------------------------------------------------------------------*/
+	/*页面头部搜索框部分*/
+	#searchBox{
+		height: 0.26rem;
+		border-radius: 0.12rem;
+	}
+
+	#searchImg{
+		margin-top: 0.02rem;
+		width: 0.2rem;
+	}
+	/*---------------------------------------------------------------------------------------------页面头部*/
+
+
+
+	/*左侧菜单栏-------------------------------------------------------------------------------------------*/
+	#menu li{
+		height: 0.63rem;
+	}
+
+	#menu li span{
+		margin: 0.2rem 6% 0.1rem 18%;
+		height: 0.33rem;
+	}
+	/*-------------------------------------------------------------------------------------------左侧菜单栏*/
+
+
+
+	/*右侧核心区域-----------------------------------------------------------------------------------------*/
+	#corePart{
+		margin-top: 0.315rem;
+	}
+
+
+
+	/*活动图片区域*/
+	.actImg{
+		height: 2.52rem;
+		width: 3.36rem;
+		border-radius: 0.17rem;
+	}
+
+
+
+	/*活动名称简介*/
+	.actBriefMsg{
+		margin-top: 0.504rem;
+		margin-left: 0.63rem;
+	}
+
+	.actBriefMsg li{
+		margin-bottom: 0.105rem;
+		height: 0.252rem;
+	}
+
+	.actBriefMsg li label{
+		height: 0.21rem;
+	}
+
+	.actName{
+		height: 0.252rem;
+	}
+
+	.actDetails{
+		height: 1.26rem;
+	}
+
+
+
+	/*活动操作按钮*/
+	.actOperationBtn{
+		height: 0.462rem;
+		width: 1.68rem;
+	}
+	/*-----------------------------------------------------------------------------------------右侧核心区域*/
+}
+
+
+
+/******************************************1280 x 800 ~ 1366 x 768******************************************/
+@media only screen and (min-width:1280px)and (max-width:1366px){
+	/*页面头部---------------------------------------------------------------------------------------------*/
+	/*页面头部搜索框部分*/
+	#searchBox{
+		height: 0.24rem;
+		border-radius: 0.1rem;
+	}
+
+	#searchImg{
+		margin-top: 0.02rem;
+		width: 0.18rem;
+	}
+	/*---------------------------------------------------------------------------------------------页面头部*/
+
+
+
+	/*左侧菜单栏-------------------------------------------------------------------------------------------*/
+	#menu li{
+		height: 0.6rem;
+	}
+
+	#menu li span{
+		margin: 0.2rem 6% 0.2rem 18%;
+		height: 0.26rem;
+	}
+	/*-------------------------------------------------------------------------------------------左侧菜单栏*/
+
+
+
+	/*右侧核心区域-----------------------------------------------------------------------------------------*/
+	#corePart{
+		margin-top: 0.3rem;
+	}
+
+
+
+	/*活动图片区域*/
+	.actImg{
+		height: 2.4rem;
+		width: 3.2rem;
+		border-radius: 0.15rem;
+	}
+
+
+
+	/*活动名称简介*/
+	.actBriefMsg{
+		margin-top: 0.48rem;
+		margin-left: 0.6rem;
+	}
+
+	.actBriefMsg li{
+		margin-bottom: 0.1rem;
+		height: 0.24rem;
+	}
+
+	.actBriefMsg li label{
+		height: 0.2rem;
+	}
+
+	.actName{
+		height: 0.24rem;
+	}
+
+	.actDetails{
+		height: 1.2rem;
+	}
+
+
+
+	/*活动操作按钮*/
+	.actOperationBtn{
+		height: 0.44rem;
+		width: 1.6rem;
+	}
+	/*-----------------------------------------------------------------------------------------右侧核心区域*/
+}
+
+
+
+/******************************************1024 x 768 ~ 1280 x 800******************************************/
+@media only screen and (min-width:1024px)and (max-width:1280px){
+	/*页面头部---------------------------------------------------------------------------------------------*/
+	/*页面头部搜索框部分*/
+	#searchBox{
+		height: 0.22rem;
+		border-radius: 0.07rem;
+	}
+
+	#searchImg{
+		margin-top: 0.02rem;
+		width: 0.16rem;
+	}
+	/*---------------------------------------------------------------------------------------------页面头部*/
+
+
+
+	/*左侧菜单栏-------------------------------------------------------------------------------------------*/
+	#menu li{
+		height: 0.562rem;
+	}
+
+	#menu li span{
+		margin: 0.2rem 6% 0.1rem 18%;
+		height: 0.262rem;
+	}
+	/*-------------------------------------------------------------------------------------------左侧菜单栏*/
+
+
+
+	/*右侧核心区域-----------------------------------------------------------------------------------------*/
+	#corePart{
+		margin-top: 0.281rem;
+	}
+
+
+
+	/*活动图片区域*/
+	.actImg{
+		height: 2.25rem;
+		width: 3rem;
+		border-radius: 0.12rem;
+	}
+
+
+
+	/*活动名称简介*/
+	.actBriefMsg{
+		margin-top: 0.45rem;
+		margin-left: 0.562rem;
+	}
+
+	.actBriefMsg li{
+		margin-bottom: 0.0937rem;
+		height: 0.225rem;
+	}
+
+	.actBriefMsg li label{
+		height: 0.187rem;
+	}
+
+	.actName{
+		height: 0.225rem;
+	}
+
+	.actDetails{
+		height: 1.124rem;
+	}
+
+
+
+	/*活动操作按钮*/
+	.actOperationBtn{
+		height: 0.412rem;
+		width: 1.50rem;
+	}
+	/*-----------------------------------------------------------------------------------------右侧核心区域*/
+}
+
+
+
+/***********************************************1024 x 768以下**********************************************/
+@media only screen and (max-width:1024px){
+	/*控制页面宽度为1024px*/
+	#contain{
+		width: 10.24rem;
+	}
+	
+
+
+	/*页面头部---------------------------------------------------------------------------------------------*/
+	/*页面头部搜索框部分*/
+	#searchBox{
+		height: 0.2rem;
+		border-radius: 0.05rem;
+	}
+
+	#searchImg{
+		margin-top: 0.02rem;
+		width: 0.14rem;
+	}
+	/*---------------------------------------------------------------------------------------------页面头部*/
+
+
+
+	/*左侧菜单栏-------------------------------------------------------------------------------------------*/
+	#menu li{
+		height: 0.45rem;
+	}
+
+	#menu li span{
+		margin: 0.15rem 6% 0.1rem 18%;
+		height: 0.2rem;
+	}
+	/*-------------------------------------------------------------------------------------------左侧菜单栏*/
+
+
+
+	/*右侧核心区域-----------------------------------------------------------------------------------------*/
+	#corePart{
+		margin-top: 0.225rem;
+	}
+
+
+
+	/*活动图片区域*/
+	.actImg{
+		height: 1.8rem;
+		width: 2.4rem;
+		border-radius: 0.1rem;
+	}
+
+
+
+	/*活动名称简介*/
+	.actBriefMsg{
+		margin-top: 0.36rem;
+		margin-left: 0.45rem;
+	}
+
+	.actBriefMsg li{
+		margin-bottom: 0.075rem;
+		height: 0.18rem;
+	}
+
+	.actBriefMsg li label{
+		height: 0.15rem;
+	}
+
+	.actName{
+		height: 0.18rem;
+	}
+
+	.actDetails{
+		height: 0.9rem;
+	}
+
+
+
+	/*活动操作按钮*/
+	.actOperationBtn{
+		height: 0.33rem;
+		width: 1.2rem;
+	}
+	/*-----------------------------------------------------------------------------------------右侧核心区域*/
+}
